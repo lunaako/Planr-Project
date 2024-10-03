@@ -23,7 +23,8 @@ class CardSection(db.Model):
       "title": self.title,
       "boardId": self.board_id,
       "createdAt": self.created_at,
-      "updatedAt": self.updated_at
+      "updatedAt": self.updated_at,
+      "userId": self.board.user_id
     }
   
   def to_dict_card(self):

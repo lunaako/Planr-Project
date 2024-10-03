@@ -11,7 +11,7 @@ class Card(db.Model):
   name = db.Column(db.String(50), nullable=False)
   description = db.Column(db.Text)
   labels = db.Column(db.String(50))
-  dueDate = db.Column(db.DateTime)
+  due_date = db.Column(db.DateTime)
   order = db.Column(db.Integer)
   card_section_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('card_sections.id')), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
@@ -26,9 +26,10 @@ class Card(db.Model):
     "name": self.name,
     "description": self.description,
     "labels": self.labels,
-    "dueDate": self.dueDate,
+    "dueDate": self.due_date,
     "order": self.order,
     "cardSectionId": self.card_section_id,
     "createdAt": self.created_at,
-    "updatedAt": self.updated_at
+    "updatedAt": self.updated_at,
+    "userId": self.card_section.to_dict_basic()['userId']
   }
