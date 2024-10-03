@@ -836,7 +836,6 @@ Update and return an existing card.
       "description": "Task description",
       "labels": "High Priority",
       "dueDate": "2024-10-10 19:00:00",
-      "order": 1,
     }
     ```
 

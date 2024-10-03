@@ -29,3 +29,8 @@ class Board(db.Model):
       "updatedAt": self.updated_at
     }
 
+  def to_dict_detail(self):
+     return {
+        **self.to_dict_basic(),
+        "CardSections": [card_section.to_dict_card() for card_section in self.card_sections]
+     }

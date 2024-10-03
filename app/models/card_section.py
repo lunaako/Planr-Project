@@ -25,3 +25,9 @@ class CardSection(db.Model):
       "createdAt": self.created_at,
       "updatedAt": self.updated_at
     }
+  
+  def to_dict_card(self):
+     return {
+        **self.to_dict_basic(),
+        "Cards": [card.to_dict_basic() for card in self.cards]
+     }
