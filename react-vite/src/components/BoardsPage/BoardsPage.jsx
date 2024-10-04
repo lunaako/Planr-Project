@@ -3,9 +3,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './BoardsPage.css';
 import LoginFormPage from "../LoginFormPage";
-import { createBoardThunk, deleteBoardThunk, getBoardThunk, updateBoardThunk } from "../../redux/board";
-
-
+import { createBoardThunk, deleteBoardThunk, getBoardsThunk, getBoardThunk, updateBoardThunk } from "../../redux/board";
+import SideBar from "../SideBar/SideBar";
 
 
 
@@ -16,34 +15,38 @@ export default function BoardsPage() {
 
   
   useEffect(() => {
-    dispatch(getBoardThunk(1))
+    dispatch(getBoardsThunk())
   }, [dispatch])
 
   if (!user) return (<LoginFormPage />)
 
 
-  console.log(boards)
+  // console.log(boards)
   return (
     <div className="boards-page-container">
       <div className="boards-page-side-bar">
+        <SideBar boards={boards} user={user} />
+
         <button onClick={() => 
           dispatch(updateBoardThunk(1, { name: 'Demo Board' }))}>
             Test Update
         </button>
 
         <button onClick={() =>
-          dispatch(createBoardThunk({name: 'Demo Day'}))}>
+          dispatch(createBoardThunk({name: 'test'}))}>
           Test Create Board
         </button>
 
         <button onClick={() =>
-          dispatch(deleteBoardThunk(5))}>
+          dispatch(deleteBoardThunk(4))}>
           Test Delete Board
         </button>
       </div>
 
       <div className="boards-page-main">
-
+          <div>
+            <h2></h2>
+          </div>
       </div>
     </div>
   )
