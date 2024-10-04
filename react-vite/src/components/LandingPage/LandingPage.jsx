@@ -17,7 +17,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     dispatch(getBoardsThunk());
-  }, [dispatch])
+  }, [dispatch, user])
 
 
   if (!user) {
@@ -44,7 +44,7 @@ export default function LandingPage() {
 
     <div className="landing-page-main">
       <div className="landing-starred">
-         Fav feature Coming Soon...
+         ❤️Fav feature Coming Soon...
       </div>
 
       <div className="landing-all-boards">
