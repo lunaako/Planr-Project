@@ -1,18 +1,26 @@
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
+import { useSelector } from 'react-redux';
+
 import "./Navigation.css";
 
 function Navigation() {
-  return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
+  const user = useSelector(state => state.session.user);
 
-      <li>
-        <ProfileButton />
-      </li>
-    </ul>
+  return (
+    <>
+      {user ? (<ul>
+        <li>
+          <NavLink to="/">Home</NavLink>
+        </li>
+
+        <li>
+          <ProfileButton />
+        </li>
+      </ul>) 
+      : 
+      (<></>)}
+    </>
   );
 }
 

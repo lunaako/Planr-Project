@@ -2,6 +2,8 @@ import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
+import OpenModalButton from '../OpenModalButton';
+import SignupFormModal from "../SignupFormModal";
 import "./LoginForm.css";
 
 function LoginFormPage() {
@@ -31,8 +33,16 @@ function LoginFormPage() {
     }
   };
 
+  const demoLogin = () => {
+    dispatch(thunkLogin({
+      "email": "demo@aa.io",
+      "password": "password"
+    }))
+    navigate('/')
+  }
+
   return (
-    <>
+    <div className="login-container">
       <h1>Log In</h1>
       {errors.length > 0 &&
         errors.map((message) => <p key={message}>{message}</p>)}
@@ -59,7 +69,14 @@ function LoginFormPage() {
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
       </form>
-    </>
+
+      <button onClick={demoLogin}>Demo User</button>
+
+      <OpenModalButton
+        buttonText='Create an account'
+        modalComponent={<SignupFormModal />}
+      />
+    </div>
   );
 }
 
