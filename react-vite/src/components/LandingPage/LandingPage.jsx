@@ -39,7 +39,6 @@ export default function LandingPage() {
           return <li key={board.id}>{board.name}</li>
         })}
       </ul>
-      <button onClick={() => navigate('/boards')}>Enter Your WorkPlace</button>
     </div>
 
     <div className="landing-page-main">

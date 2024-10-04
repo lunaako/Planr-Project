@@ -22,7 +22,7 @@ export default function Layout() {
     <>
       <ModalProvider>
         <Navigation />
-        {/* <SideBar /> */}
+        <SideBar />
         {isLoaded && <Outlet />}
         <Modal />
       </ModalProvider>

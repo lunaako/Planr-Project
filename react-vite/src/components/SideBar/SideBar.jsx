@@ -5,23 +5,27 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import OpenModalButton from '../OpenModalButton';
 import DeleteBoardModal from '../DeleteBoardModal/DeleteBoardModal';
-import { useDispatch } from 'react-redux';
-import { getBoardThunk } from '../../redux/board';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBoardsThunk, getBoardThunk } from '../../redux/board';
 
 
-export default function SideBar({boards, user}) {
-  const boardsArr = Object.values(boards);
+export default function SideBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);
+  const boards = useSelector(state => state.board);
+  const boardsArr = Object.values(boards);
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    dispatch(getBoardsThunk())
+  }, [dispatch])
 
   const handleMenu = () => {
     setIsOpen(prev => !prev)
   }
 
-  // console.log(boardsArr[0])
-
+  if (!user) return <></>
   return (
   <div className='side-bar-container'>
     <div className='side-bar-buttons'>
@@ -43,12 +47,17 @@ export default function SideBar({boards, user}) {
         <h3>
             {user.username}&apos; Boards
         </h3>
-        <span><FontAwesomeIcon icon={faEllipsis} /></span>
       </div>
 
       <ul className='side-bar-board-lists'>
         {boardsArr.map(board => {
-          return (<div key={board.id} onClick={() => dispatch(getBoardThunk(board.id))}>
+          
+          const handleDetailBoard = () => {
+            dispatch(getBoardThunk(board.id));
+            navigate(`/boards/${board.id}`);
+          }
+
+          return (<div key={board.id} onClick={handleDetailBoard}>
             <li>{board.name}</li>
             <span><FontAwesomeIcon icon={faEllipsis} onClick={handleMenu} /></span>
             <div className={isOpen ? 'board-update-display': 'disable'}>
@@ -62,6 +71,7 @@ export default function SideBar({boards, user}) {
       </ul>
 
     </div>
+
   </div>
 )
 }

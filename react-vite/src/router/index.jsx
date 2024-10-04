@@ -3,7 +3,7 @@ import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import LandingPage from '../components/LandingPage';
 import Layout from './Layout';
-import BoardsPage from '../components/BoardsPage/BoardsPage';
+import BoardDetailPage from '../components/BoardDetailPage/BoardDetailPage';
 
 export const router = createBrowserRouter([
   {
@@ -22,8 +22,8 @@ export const router = createBrowserRouter([
         element: <SignupFormPage />,
       },
       {
-        path: "boards",
-        element: <BoardsPage />
+        path: "boards/:id",
+        element: <BoardDetailPage />
       }
     ],
   },
