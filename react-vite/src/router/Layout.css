@@ -1,0 +1,25 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+}
+
+/* Side Bar */
+.content-container> :first-child {
+  width: 20%;
+  background-color: #f8f9fa;
+  position: relative;
+  z-index: 2;
+}
+
+/* Other component in Outlet */
+.content-container> :nth-child(2) {
+  flex: 1;
+  z-index: 1;
+  position: relative;
+}

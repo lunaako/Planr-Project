@@ -1,7 +1,6 @@
 import LoginFormPage from "../LoginFormPage";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import { getBoardsThunk } from "../../redux/board";
 
@@ -12,8 +11,6 @@ export default function LandingPage() {
   const boardsArr = Object.values(boards);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
 
   useEffect(() => {
     dispatch(getBoardsThunk());
@@ -31,16 +28,6 @@ export default function LandingPage() {
 
   return (
    <div className="landing-page-container">
-
-    <div className="landing-page-side-bar">
-        <h3>{user.username}&apos; Boards</h3>
-      <ul>
-        {boardsArr?.map(board => {
-          return <li key={board.id}>{board.name}</li>
-        })}
-      </ul>
-    </div>
-
     <div className="landing-page-main">
       <div className="landing-starred">
          ❤️Fav feature Coming Soon...

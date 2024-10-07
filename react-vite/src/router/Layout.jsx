@@ -1,3 +1,4 @@
+import './Layout.css';
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -9,7 +10,6 @@ import SideBar from "../components/SideBar/SideBar";
 export default function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
@@ -21,10 +21,14 @@ export default function Layout() {
   return (
     <>
       <ModalProvider>
-        <Navigation />
-        <SideBar />
-        {isLoaded && <Outlet />}
-        <Modal />
+        <div className='layout'>
+          <Navigation />
+          <div className='content-container'>
+            <SideBar />
+            {isLoaded && <Outlet />}
+            <Modal />
+          </div>
+        </div>
       </ModalProvider>
     </>
   );

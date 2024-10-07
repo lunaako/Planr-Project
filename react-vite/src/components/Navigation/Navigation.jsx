@@ -9,7 +9,7 @@ function Navigation() {
 
   return (
     <>
-      {user ? (<ul>
+      {user ? (<ul className="nav-bar-container">
         <li>
           <NavLink to="/">Home</NavLink>
         </li>
