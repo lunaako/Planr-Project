@@ -2,8 +2,19 @@ import './CardSection.css'
 
 
 
-export default function CardSection() {
+export default function CardSection({cardSec}) {
+  // console.log(cardSec)
+
+
+  if (!cardSec) return <>Loading</>
+
   return (
-    <div>This is CardSection!</div>
+    <div>
+      <p>{cardSec?.title}</p>
+
+      <div className='card-section-cards'>
+        
+      </div>
+    </div>
   )
 }

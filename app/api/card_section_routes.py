@@ -35,7 +35,7 @@ def edit_card_section(id):
 @login_required
 def delete_card_section(id):
   """
-  Deletes and existing card sectuin based on its id if the user is logged in
+  Deletes and existing card section based on its id if the user is logged in
   """
   card_section = CardSection.query.get(id)
   if not card_section:

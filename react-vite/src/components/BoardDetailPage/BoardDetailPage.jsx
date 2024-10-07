@@ -5,19 +5,25 @@ import LoginFormPage from "../LoginFormPage";
 import { getBoardsThunk} from "../../redux/board";
 import { useParams } from "react-router-dom";
 import Card from "../Card/Card";
+import { getCardSectionsThunk } from "../../redux/cardSection";
+import CardSection from "../CardSection/CardSection";
 
 export default function BoardDetailPage() {
   const { id:boardId } = useParams();
   const user = useSelector(state => state.session.user);
   const boards = useSelector(state => state.board);
-  const currBoard = boards[boardId];
+  const cardSections = useSelector(state => state.cardSection);
+  const cardSectionArr = Object.values(cardSections);
   const dispatch = useDispatch();
 
-  // console.log(currBoard.CardSections[0].Cards)
-  
+  const currBoard = boards[boardId];
+
+  // console.log(cardSectionArr)
+
   useEffect(() => {
     dispatch(getBoardsThunk())
-  }, [dispatch])
+    dispatch(getCardSectionsThunk(boardId))
+  }, [dispatch, boardId])
 
   if (!user) return (<LoginFormPage />)
   if (!currBoard) return <>Loading...</>
@@ -28,17 +34,12 @@ export default function BoardDetailPage() {
         <h2>{currBoard?.name}</h2>
       </div>
 
-      {currBoard.CardSections?.length ?
-        currBoard.CardSections?.map(cardSection => {
-          return <div key={cardSection.id}>
-                  <p>{cardSection.title}</p>
-                  {cardSection.Cards?.map(card => {
-                    return <Card card={card} />
-                  })}
-                </div>
+      {cardSectionArr.length ? 
+        cardSectionArr.map(cardSec => {
+          return <CardSection cardSec={cardSec} key={cardSec.id} />
         })
         :
-        <button>Add a Card</button>
+        <button>Create Your Card!</button>
       }
 
     </div>
