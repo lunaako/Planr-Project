@@ -6,6 +6,7 @@
   border: 1px solid grey;
   overflow: visible;
   height: 100%;
+  margin-right: 2%;
 }
 
 .side-bar-buttons {
@@ -18,6 +19,12 @@
 
 .side-bar-boards-display {
   width: 100%;
+}
+
+.side-bar-boards-header {
+  display: flex;
+  align-items: center;
+  gap:5px;
 }
 
 .side-bar-boards-header h3 {

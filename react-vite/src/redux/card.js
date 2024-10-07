@@ -1,8 +1,32 @@
 const GET_CARDS = 'card/get';
+const CREATE_CARD = 'card/create';
+const UPDATE_CARD = 'card/update';
+const DELERE_CARD = 'card/delete';
 
 const getCards = (payload) => {
   return {
     type: GET_CARDS,
+    payload
+  }
+}
+
+const createCard = (payload) => {
+  return {
+    type: CREATE_CARD,
+    payload
+  }
+}
+
+const updateCard = (payload) => {
+  return {
+    type: UPDATE_CARD,
+    payload
+  }
+}
+
+const deleteCard = (payload) => {
+  return {
+    type: DELERE_CARD,
     payload
   }
 }
@@ -13,6 +37,51 @@ export const getCardsThunk = (csId) => async(dispatch) => {
     const data = await res.json()
     dispatch(getCards(data.Cards))
     return data
+  } else {
+    const err = await res.json()
+    return err;
+  }
+}
+
+export const createCardThunk = (csId, newCard) => async(dispatch) => {
+  const res = await fetch(`/api/card-sections/${csId}/cards`, {
+    method: 'POST',
+    body: JSON.stringify(newCard),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  if(res.ok) {
+    const data = await res.json()
+    dispatch(createCard(data))
+    return data
+  } else {
+    const err = await res.json()
+    return err;
+  }
+}
+
+export const updateCardThunk = (cardId, card) => async(dispatch) => {
+  const res = await fetch(`/api/cards/${cardId}`, {
+    method: 'PUT',
+    body: JSON.stringify(card),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  if(res.ok) {
+    const data = await res.json()
+    dispatch(updateCard(data))
+    return data
+  } else {
+    const err = await res.json()
+    return err;
+  }
+}
+
+export const deleteCardThunk = (cardId) => async(dispatch) => {
+  const res = await fetch(`/api/cards/${cardId}`, {
+    method: 'DELETE'
+  })
+  if(res.ok) {
+    dispatch(deleteCard(cardId))
+    return null;
   } else {
     const err = await res.json()
     return err;
@@ -35,6 +104,24 @@ function cardReducer(state={}, action) {
       return newState;
     }
 
+    case CREATE_CARD: {
+      const newState = {...state}
+      newState[action.payload.id] = action.payload
+      return newState;
+    }
+
+    case UPDATE_CARD: {
+      const newState = {...state}
+      const updatedCard = action.payload
+      newState[updatedCard.id] = updatedCard
+      return newState;
+    }
+
+    case DELERE_CARD: {
+      const newState = {...state}
+      delete newState[action.payload]
+      return newState;
+    }
 
     default:
       return state;

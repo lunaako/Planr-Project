@@ -10,6 +10,9 @@ card_routes = Blueprint('cards', __name__)
 @card_routes.route('<int:cardId>', methods=['PUT'])
 @login_required
 def edit_card(cardId):
+  """
+  Update a card based on its id when the user is logged in
+  """
   card = Card.query.get(cardId)
   if not card:
     return {'message': 'Card couldn\'t be found'}, 404
