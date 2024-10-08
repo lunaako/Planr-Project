@@ -8,7 +8,7 @@ import { getBoardsThunk } from "../../redux/board";
 export default function LandingPage() {
   const user = useSelector(state => state.session.user);
   const boards = useSelector(state => state.board);
-  const boardsArr = Object.values(boards);
+  const boardsArr = Object.values(boards).filter(board => board.userId === user?.id);
 
   const dispatch = useDispatch();
 

@@ -10,7 +10,7 @@
 }
 
 /* Side Bar */
-.content-container> :first-child {
+.side-bar {
   width: 20%;
   background-color: #f8f9fa;
   position: relative;
@@ -18,7 +18,7 @@
 }
 
 /* Other component in Outlet */
-.content-container> :nth-child(2) {
+.main-content {
   flex: 1;
   z-index: 1;
   position: relative;

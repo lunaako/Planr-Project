@@ -16,7 +16,7 @@ export default function SideBar() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
   const boards = useSelector(state => state.board);
-  const boardsArr = Object.values(boards);
+  const boardsArr = Object.values(boards).filter(board => board.userId === user.id);
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRefs = useRef({});
 
@@ -71,7 +71,7 @@ export default function SideBar() {
     <div className='side-bar-boards-display'>
       <div className='side-bar-boards-header'>
         <h3>
-            {user.username}&apos; Boards
+            {user.username}&apos;s Boards
         </h3>
         <OpenModalButton
           buttonText={<FontAwesomeIcon icon={faPlus} />}
