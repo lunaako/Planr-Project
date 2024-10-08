@@ -87,18 +87,21 @@ export default function BoardDetailPage() {
         }
       </div>
 
-      {cardSectionArr.length ? 
-        cardSectionArr.map(cardSec => {
-          return <CardSection cardSec={cardSec} key={cardSec.id} />
-        })
-        :
-        <></>
-      }
+      <div className="board-detail-main-card">
+        {cardSectionArr.length ?
+          cardSectionArr.map(cardSec => {
+            return <CardSection cardSec={cardSec} key={cardSec.id} />
+          })
+          :
+          <></>
+        }
 
-      <OpenModalButton
-        buttonText='Create a New Card Section'
-        modalComponent={<CreateCsModal boardId={currBoard.id} />}
-      />
+        <OpenModalButton
+          buttonText='Create a New Card Section'
+          modalComponent={<CreateCsModal boardId={currBoard.id} />}
+        />
+      </div>
+
 
     </div>
   )

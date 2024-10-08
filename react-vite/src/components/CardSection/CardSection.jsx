@@ -1,22 +1,43 @@
 import { useEffect, useState } from 'react'
-import { getCardsThunk } from '../../redux/card'
+import { createCardThunk, getCardsThunk } from '../../redux/card'
 import './CardSection.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCardSectionThunk } from '../../redux/cardSection'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
 import OpenModalButton from '../OpenModalButton';
 import DeleteCardSectionModal from '../DeleteCardSectionModal'
+import DeleteCardModal from '../DeleteCardModal/DeleteCardModal'
+import UpdateCardModal from '../UpdateCardModal/UpdateCardModal'
 
 
 export default function CardSection({cardSec}) {
   const dispatch = useDispatch()
   const cards = useSelector(state => state.card)
-  const cardArr = Object.values(cards)
   const csId = cardSec.id
+  const cardArr = Object.values(cards).filter(card => card.cardSectionId === csId)
   const [isEditing, setIsEditing] = useState(false)
   const [csName, setCsName] = useState(cardSec?.title || '')
+  const [cardName, setCardName] = useState('')
+  const [isCreateCard, setIsCreateCard] = useState(false)
 
+  //! for add new card
+  const handleAddCard = () => {
+    setIsCreateCard(true)
+  }
+
+  const handleCardNameInput = (e) => {
+    setCardName(e.target.value)
+  }
+
+  const handleCardSubmit = (e) => {
+    e.preventDefault()
+    dispatch(createCardThunk(csId, {name: cardName}))
+    setCardName('')
+    setIsCreateCard(false)
+  }
+
+  //! for change name of card section
   const handleCsNameUpdate = () => {
     if (csName.trim() && csName !== cardSec?.title) {
       dispatch(updateCardSectionThunk(csId, {title: csName}))
@@ -57,8 +78,9 @@ export default function CardSection({cardSec}) {
 
   if (!cardSec) return <>Loading</>
 
+
   return (
-    <div>
+    <div className='card-section-container'>
       <div className='card-section-title'>
         {isEditing ? (
           <input
@@ -86,10 +108,51 @@ export default function CardSection({cardSec}) {
       
       <div className='card-section-cards'>
        {cardArr.map(card => {
-        return <div key={card.id}>{card.name}</div>
+        return <div key={card.id} className='card-section-card-row'>
+                <p>{card.name}</p>
+          <div className='card-section-card-row-icons'>
+                  <OpenModalButton
+                    buttonText={<FontAwesomeIcon icon={faTrash} />}
+                    modalComponent={<DeleteCardModal cardId={card.id} />}
+                  />
+                  <OpenModalButton
+                    buttonText={<FontAwesomeIcon icon={faPen} />}
+                    modalComponent={<UpdateCardModal card={card} csId={csId} />}
+                  />
+                </div>
+                
+              </div>
        })}
-      </div>
 
+        { isCreateCard ?
+        (
+          <form className='card-section-add-card-input'>
+              <input
+                type='text'
+                value={cardName}
+                onChange={handleCardNameInput}
+                placeholder='Enter a name for this card'
+                autoFocus
+              />
+              <button
+                type='submit'
+                onClick={handleCardSubmit}
+              >
+                Add card
+              </button>
+          </form>
+
+        ) : (
+        <div 
+        onClick={handleAddCard}
+        className='card-section-add-card'
+        >
+          <FontAwesomeIcon icon={faPlus} />
+          <p>Add a cards</p>
+        </div>
+        )  
+        }
+      </div>
 
     </div>
   )

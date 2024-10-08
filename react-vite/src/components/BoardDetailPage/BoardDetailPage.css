@@ -1,3 +1,9 @@
 .board-header h2{
   margin-top: 0;
 }
+
+.board-detail-main-card {
+  display: flex;
+  align-items: center;
+  gap:2%;
+}

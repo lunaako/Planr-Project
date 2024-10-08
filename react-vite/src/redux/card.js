@@ -1,7 +1,7 @@
 const GET_CARDS = 'card/get';
 const CREATE_CARD = 'card/create';
 const UPDATE_CARD = 'card/update';
-const DELERE_CARD = 'card/delete';
+const DELETE_CARD = 'card/delete';
 
 const getCards = (payload) => {
   return {
@@ -26,7 +26,7 @@ const updateCard = (payload) => {
 
 const deleteCard = (payload) => {
   return {
-    type: DELERE_CARD,
+    type: DELETE_CARD,
     payload
   }
 }
@@ -60,6 +60,7 @@ export const createCardThunk = (csId, newCard) => async(dispatch) => {
 }
 
 export const updateCardThunk = (cardId, card) => async(dispatch) => {
+  console.log(card)
   const res = await fetch(`/api/cards/${cardId}`, {
     method: 'PUT',
     body: JSON.stringify(card),
@@ -117,7 +118,7 @@ function cardReducer(state={}, action) {
       return newState;
     }
 
-    case DELERE_CARD: {
+    case DELETE_CARD: {
       const newState = {...state}
       delete newState[action.payload]
       return newState;

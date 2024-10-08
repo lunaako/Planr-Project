@@ -1,3 +1,29 @@
 .card-section-title {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-section-container {
+  min-width: 200px;
+  border: 1px solid #ccc;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+.card-section-add-card {
+  display: flex;
+  align-items: center;
+  gap:2%;
+}
+
+.card-section-add-card-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-section-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

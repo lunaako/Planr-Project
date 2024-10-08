@@ -1,0 +1,20 @@
+.update-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.update-des-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.update-des-left,
+.update-duedate-header,
+.update-labels-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+

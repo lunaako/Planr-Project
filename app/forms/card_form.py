@@ -6,13 +6,16 @@ from datetime import datetime
 
 def validate_due_date(form, field):
   due_date_str = field.data
-  
   if due_date_str is None or due_date_str.strip() == "":
         return
   try: 
+    print(due_date_str)
     due_date = datetime.fromisoformat(due_date_str)
+    print(due_date)
     field.data = due_date
   except ValueError:
+    print("Due date format error")
+
     raise ValidationError('Invalid due date format')
 
 
