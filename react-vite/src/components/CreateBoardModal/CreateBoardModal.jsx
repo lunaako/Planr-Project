@@ -14,22 +14,31 @@ export default function CreateBoardModal() {
 
   useEffect(() => {
     let err = {};
+
     if (boardName.length > 50) {
-      err.boardName = 'Board Name should be within 50 characters!'
+      err.boardName = 'Board name should be within 50 characters!'
     }
     setErrors(err);
   }, [boardName])
 
   const handleSubmit= (e) => {
     e.preventDefault();
-    dispatch(createBoardThunk({name: boardName}))
-      .then(closeModal)
+    let err = {};
+    if(!boardName) {
+      err.boardName = 'Board name is required'
+    }
+    setErrors(err);
+
+    if (!Object.values(err).length) {
+      dispatch(createBoardThunk({ name: boardName }))
+        .then(closeModal)
+    }
   }
 
   return (
-    <div>
-      <h3>Create Board</h3>
-      <form>
+    <div className='create-board-self'>
+      <h2>Create Board</h2>
+      <form onSubmit={handleSubmit}>
         <label>
           Board Name
           <input 
@@ -40,12 +49,13 @@ export default function CreateBoardModal() {
           />
         </label>
 
-        {errors.boardName && <p>{errors.boardName}</p>}
+        {errors.boardName && <p>*{errors.boardName}</p>}
 
         <button
           type='submit'
           onClick={handleSubmit}
           disabled={Object.values(errors).length}
+          className='buttons-wiz-hover'
         >
           Create
         </button>

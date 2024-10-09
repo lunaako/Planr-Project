@@ -1,0 +1,29 @@
+.create-board-self{
+  padding: 20px;
+}
+
+.create-board-self h2{
+  text-align: center;
+  margin-top: 0px;
+}
+
+.create-board-self form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.create-board-self input {
+  margin-left: 1rem;
+}
+
+.create-board-self button {
+  height: 2rem;
+}
+
+.create-board-self p {
+  color: red;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+

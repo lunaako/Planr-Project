@@ -65,8 +65,9 @@
   right: -20px;
   background-color: white;
   border: 1px solid #ccc;
-  z-index: 10;
-  padding: 8px;
+  border-radius: 5px;
+  z-index: 4;
+  padding: 2px;
 }
 
 .side-bar-board-item:hover .side-bar-board-action-ellipsis-button,
@@ -83,6 +84,11 @@
 
 .side-bar-board-actions {
   position: relative;
+  right: 10px;
+}
+
+.side-bar-board-actions button {
+  border: none;
 }
 
 .side-bar-board-name {
@@ -92,4 +98,5 @@
 .side-bar-board-item:hover {
   background-color: #E9F2FF;
 }
+
 

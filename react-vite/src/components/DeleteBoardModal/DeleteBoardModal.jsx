@@ -1,7 +1,7 @@
 import { useModal } from '../../context/Modal';
 import { useDispatch } from "react-redux";
 import { deleteBoardThunk } from '../../redux/board';
-
+import './DeleteBoardModal.css'
 
 
 
@@ -22,19 +22,22 @@ export default function DeleteBoardModal({boardId}) {
         <p>Are you sure you want to delete this board?</p>
       </div>
 
-      <button
-        className='delete-board-yes'
-        onClick={handleDelete}
-      >
-        Yes (Delete Board)
-      </button>
+      <div className='delete-board-buttons'>
+        <button
+          className='delete-board-yes'
+          onClick={handleDelete}
+        >
+          Yes (Delete Board)
+        </button>
 
-      <button
-        className='delete-board-no'
-        onClick={() => closeModal()}
-      >
-        No (Keep Board)
-      </button>
+        <button
+          className='delete-board-no buttons-wiz-hover'
+          onClick={() => closeModal()}
+        >
+          No (Keep Board)
+        </button>
+      </div>
+      
     </div>
   )
 }

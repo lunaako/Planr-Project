@@ -1,0 +1,19 @@
+.delete-board-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.delete-board-header h2 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.delete-board-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-board-yes:hover {
+  background-color: #d0cccc;
+  border: none;
+}

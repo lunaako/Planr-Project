@@ -1,0 +1,49 @@
+.landing-page-container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.landing-starred {
+  height: 46%;
+  border-bottom: 1px solid #ccc;
+  padding: 1%;
+}
+
+.landing-all-boards {
+  height: 46%;
+  padding: 1%;
+}
+
+.landing-allboards-icon {
+  margin-right: 0.7rem;
+}
+
+.landing-all-boards h3 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.landing-board-imgs {
+  width: 200px;
+  height: 120px;
+}
+
+.landing-board p {
+  position: relative;
+  bottom: 140px;
+  left: 5px;
+  color: white;
+}
+
+.landing-boards-block {
+  display: flex;
+  justify-content: flex-start;
+  gap:1rem;
+}
+
+.landing-board {
+  cursor: pointer;
+}
