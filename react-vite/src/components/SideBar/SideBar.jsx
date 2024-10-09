@@ -55,16 +55,12 @@ export default function SideBar() {
   return (
   <div className='side-bar-container'>
     <div className='side-bar-buttons'>
-      <button onClick={() => navigate('/')} className='buttons-wiz-hover'>
+      <button onClick={() => navigate('/')}>
         Home
       </button>
       
-      <button className='buttons-wiz-hover'>
+      <button>
         Template(TBD)
-      </button>
-
-      <button className='buttons-wiz-hover'>
-        Enter Your WorkPlace
       </button>
     </div>
 

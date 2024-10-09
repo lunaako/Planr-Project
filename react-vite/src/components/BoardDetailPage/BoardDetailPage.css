@@ -1,9 +1,45 @@
+.board-header {
+  border: 1px solid #ccc;
+  border-left: none;
+  border-right: none;
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
+  cursor: pointer;
+}
+
+.board-header h2:hover {
+  background-color: #E8E8E8;
+}
+
 .board-header h2{
-  margin-top: 0;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-left: 1%;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  padding: 3px;
+  border-radius: 5px;
 }
 
 .board-detail-main-card {
   display: flex;
   align-items: center;
   gap:2%;
+  margin-left: 1%;
 }
+
+.board-name-input{
+  font-size: 1.3rem;
+  line-height: 1.2;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-left: 1%;
+  padding: 3px;
+  box-sizing: content-box;
+}
+
+.board-name-input:focus {
+  border-color: #007bff;
+}
+

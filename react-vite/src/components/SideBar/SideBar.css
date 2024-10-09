@@ -3,11 +3,9 @@
 }
 
 .side-bar-container {
-  border: 1px solid grey;
+  border: 1px solid #ccc;
   overflow: visible;
   height: 100%;
-  margin-right: 3%;
-  /* padding: 1rem; */
 }
 
 .side-bar-buttons {
@@ -18,6 +16,18 @@
   border-bottom: 1px solid #ccc;
   padding: 1rem;
 }
+
+.side-bar-buttons button {
+  border: none;
+  width: 100%;
+  height: 2rem;
+  font-size: 15px;
+}
+
+.side-bar-buttons button:hover {
+  background-color: #E9F2FF;
+}
+
 
 .side-bar-boards-display {
   padding: 1rem;
@@ -43,7 +53,6 @@
   display: flex;
   flex-direction: column;
   padding: 0;
-  /* align-items: center; */
 }
 
 .side-bar-board-item {
