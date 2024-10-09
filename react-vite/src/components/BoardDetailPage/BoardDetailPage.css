@@ -1,3 +1,10 @@
+.board-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
 .board-header {
   border: 1px solid #ccc;
   border-left: none;
@@ -24,13 +31,17 @@
 
 .board-detail-main-card {
   display: flex;
-  align-items: center;
-  gap:2%;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  align-items: flex-start;
+  height: 100vh;
+  gap: 2%;
   margin-left: 1%;
 }
 
 .board-name-input{
   font-size: 1.3rem;
+  font-weight: bold;
   line-height: 1.2;
   margin-top: 1%;
   margin-bottom: 1%;
@@ -42,4 +53,17 @@
 .board-name-input:focus {
   border-color: #007bff;
 }
+
+.board-detail-main-card > button {
+  border: 1px solid #ccc;
+  min-width: fit-content;
+  height: 2rem;
+}
+
+.board-detail-main-card > button:hover {
+  background-color: #E8E8E8;
+  border: none;
+}
+
+
 

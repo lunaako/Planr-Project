@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { createCardThunk, getCardsThunk } from '../../redux/card'
 import './CardSection.css'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,6 +20,8 @@ export default function CardSection({cardSec}) {
   const [csName, setCsName] = useState(cardSec?.title || '')
   const [cardName, setCardName] = useState('')
   const [isCreateCard, setIsCreateCard] = useState(false)
+
+  const cardInputRef = useRef(null)
 
   //! for add new card
   const handleAddCard = () => {
@@ -76,6 +78,20 @@ export default function CardSection({cardSec}) {
     dispatch(getCardsThunk(csId))
   }, [dispatch, csId])
 
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (cardInputRef.current && !cardInputRef.current.contains(e.target)) {
+        setIsCreateCard(false) // Close the input form if clicked outside
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [cardInputRef, isCreateCard])
+
   if (!cardSec) return <>Loading</>
 
 
@@ -112,11 +128,11 @@ export default function CardSection({cardSec}) {
                 <p>{card.name}</p>
           <div className='card-section-card-row-icons'>
                   <OpenModalButton
-                    buttonText={<FontAwesomeIcon icon={faTrash} />}
+              buttonText={<FontAwesomeIcon icon={faTrash} />}
                     modalComponent={<DeleteCardModal cardId={card.id} />}
                   />
                   <OpenModalButton
-                    buttonText={<FontAwesomeIcon icon={faPen} />}
+              buttonText={<FontAwesomeIcon icon={faPen} />}
                     modalComponent={<UpdateCardModal card={card} csId={csId} />}
                   />
                 </div>
@@ -126,7 +142,7 @@ export default function CardSection({cardSec}) {
 
         { isCreateCard ?
         (
-          <form className='card-section-add-card-input'>
+          <form className='card-section-add-card-input' ref={cardInputRef}>
               <input
                 type='text'
                 value={cardName}
@@ -137,6 +153,8 @@ export default function CardSection({cardSec}) {
               <button
                 type='submit'
                 onClick={handleCardSubmit}
+                className='buttons-wiz-hover'
+                id='card-section-add-card-button'
               >
                 Add card
               </button>
@@ -148,7 +166,7 @@ export default function CardSection({cardSec}) {
         className='card-section-add-card'
         >
           <FontAwesomeIcon icon={faPlus} />
-          <p>Add a cards</p>
+          <p>Add a card</p>
         </div>
         )  
         }
