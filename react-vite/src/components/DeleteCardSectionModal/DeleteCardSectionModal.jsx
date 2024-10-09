@@ -14,25 +14,28 @@ export default function DeleteCardSectionModal({csId}) {
   }
 
   return (
-    <div>
+    <div className='delete-card-section-self'>
       <div>
         <h2>Confirm Delete</h2>
         <p>Are you sure you want to delete this card section?</p>
       </div>
 
-      <button
-        className='delete-cs-yes'
-        onClick={handleDelete}
-      >
-        Yes
-      </button>
+      <div className='delete-card-section-buttons'>
+        <button
+          className='delete-cs-yes'
+          onClick={handleDelete}
+        >
+          Yes (Delete card section)
+        </button>
 
-      <button
-        className='delete-cs-no'
-        onClick={() => closeModal()}
-      >
-        No
-      </button>
+        <button
+          className='delete-cs-no buttons-wiz-hover'
+          onClick={() => closeModal()}
+        >
+          No (Keep card section)
+        </button>
+      </div>
+     
     </div>
   )
 }

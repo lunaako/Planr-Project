@@ -1,0 +1,19 @@
+.delete-card-section-self {
+  padding: 20px;
+  text-align: center;
+}
+
+.delete-card-section-self h2 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.delete-card-section-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-cs-yes:hover {
+  background-color: #d0cccc;
+  border: none;
+}
