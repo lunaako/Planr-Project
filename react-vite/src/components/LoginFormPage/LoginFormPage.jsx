@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import OpenModalButton from '../OpenModalButton';
 import SignupFormModal from "../SignupFormModal";
 import "./LoginForm.css";
+import loginImage from '/login-image.jpg'
 
 function LoginFormPage() {
   const navigate = useNavigate();
@@ -43,39 +44,46 @@ function LoginFormPage() {
 
   return (
     <div className="login-container">
-      <h1>Log In</h1>
-      {errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
-      </form>
+      <div className="login-img">
+        <img src={loginImage} alt='image' />
+      </div>
 
-      <button onClick={demoLogin}>Demo User</button>
+      <div className="login-form">
+        <h1>Log In</h1>
+        {errors.length > 0 &&
+          errors.map((message) => <p key={message}>{message}</p>)}
+        <form onSubmit={handleSubmit}>
+          <label>
+            Email
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          {errors.email && <p>{errors.email}</p>}
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          {errors.password && <p>{errors.password}</p>}
+          <button type="submit">Log In</button>
+        </form>
 
-      <OpenModalButton
-        buttonText='Create an account'
-        modalComponent={<SignupFormModal />}
-      />
+        <button onClick={demoLogin} className="buttons-wiz-hover">Demo User</button>
+
+        <OpenModalButton
+          buttonText='Create an account'
+          modalComponent={<SignupFormModal />}
+        />
+      </div>
+      
     </div>
   );
 }

@@ -1,0 +1,41 @@
+
+.login-container {
+  margin-left: 1%;
+  margin-right: 1%;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2%;
+}
+
+.login-form,
+.login-img {
+  width: 45%;
+}
+
+.login-img img {
+  width: 100%;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 100%;
+}
+
+.login-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.login-form h1 {
+  margin-top: 0;
+}
+
+

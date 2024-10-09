@@ -11,13 +11,11 @@ export default function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const sessionUser = useSelector(state => state.session.user);
+  const location = useLocation()
 
   useEffect(() => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
-  // const shouldShowNav = !hideNavPaths.includes(location.pathname);
-  // console.log(location.pathname);
 
   return (
     <>
@@ -31,7 +29,7 @@ export default function Layout() {
               </div>
             )}
 
-            <div className='main-content'>
+            <div className={`main-content ${ !sessionUser ? 'center-content' : ''}`}>
               {isLoaded && <Outlet />}
             </div>
             <Modal />

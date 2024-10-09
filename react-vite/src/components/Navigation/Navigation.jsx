@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import { useSelector } from 'react-redux';
-
+import webLogo from '/logo.jpg';
 import "./Navigation.css";
 
 function Navigation() {
@@ -11,11 +11,14 @@ function Navigation() {
     <>
       {user ? (<ul className="nav-bar-container">
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/" className='nav-link-container'>
+            <img src={webLogo} alt='logo' className="nav-logo"/>
+            <h1>Planr</h1>
+          </NavLink>
         </li>
 
         <li>
-          <ProfileButton />
+          <ProfileButton className='nav-profile-icon' />
         </li>
       </ul>) 
       : 

@@ -41,17 +41,17 @@ function ProfileButton() {
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+      <button onClick={toggleMenu} className="profile-user-button">
+        <FaUserCircle className="profile-user-icon"/>
       </button>
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
+              <li>Hi, {user.username}</li>
               <li>{user.email}</li>
               <li>
-                <button onClick={logout}>Log Out</button>
+                <button onClick={logout} className="buttons-wiz-hover">Log Out</button>
               </li>
             </>
           ) : (
