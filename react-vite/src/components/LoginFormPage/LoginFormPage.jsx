@@ -60,9 +60,11 @@ function LoginFormPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              id='login-email-input'
             />
           </label>
-          {errors.email && <p>{errors.email}</p>}
+          {errors.email && 
+            <p className="login-errors">*{errors.email}</p>}
           <label>
             Password
             <input
@@ -72,14 +74,19 @@ function LoginFormPage() {
               required
             />
           </label>
-          {errors.password && <p>{errors.password}</p>}
-          <button type="submit">Log In</button>
+          {errors.password && 
+            <p className="login-errors">*{errors.password}</p>}
+
+          <button type="submit" className="login-button">
+            Log In
+          </button>
         </form>
 
         <button onClick={demoLogin} className="buttons-wiz-hover">Demo User</button>
 
         <OpenModalButton
           buttonText='Create an account'
+          // modalClassName=''
           modalComponent={<SignupFormModal />}
         />
       </div>
