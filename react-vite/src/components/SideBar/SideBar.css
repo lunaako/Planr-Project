@@ -6,25 +6,32 @@
   border: 1px solid grey;
   overflow: visible;
   height: 100%;
-  margin-right: 2%;
+  margin-right: 3%;
+  /* padding: 1rem; */
 }
 
 .side-bar-buttons {
   display: flex;
   flex-direction: column;
-  width: 100%;
   align-items: center;
   gap:10px;
+  border-bottom: 1px solid #ccc;
+  padding: 1rem;
 }
 
 .side-bar-boards-display {
-  width: 100%;
+  padding: 1rem;
 }
 
 .side-bar-boards-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap:5px;
+}
+
+.side-bar-boards-header button {
+  border: none;
 }
 
 .side-bar-boards-header h3 {
@@ -44,6 +51,8 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .side-bar-board-item li {
@@ -74,5 +83,13 @@
 
 .side-bar-board-actions {
   position: relative;
+}
+
+.side-bar-board-name {
+  cursor: pointer;
+}
+
+.side-bar-board-item:hover {
+  background-color: #E9F2FF;
 }
 

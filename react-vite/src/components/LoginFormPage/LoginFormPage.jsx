@@ -86,7 +86,7 @@ function LoginFormPage() {
 
         <OpenModalButton
           buttonText='Create an account'
-          // modalClassName=''
+          modalClassName='signup-modal-self'
           modalComponent={<SignupFormModal />}
         />
       </div>

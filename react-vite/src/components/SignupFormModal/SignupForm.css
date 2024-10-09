@@ -1,0 +1,41 @@
+.signup-modal {
+  padding: 20px;
+}
+
+.signup-modal h2 {
+  text-align: center;
+  margin-top: 0px;
+}
+
+.signup-modal form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.signup-modal input {
+  margin-left: 2rem;
+}
+
+#signup-email-input {
+  margin-left: 7.5rem;
+}
+
+#signup-username {
+  margin-left: 5.5rem;
+}
+
+#signup-password {
+  margin-left: 5.7rem;
+}
+
+.signup-errors {
+  color: red;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.signup-modal button {
+  height: 2rem;
+}

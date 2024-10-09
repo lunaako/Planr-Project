@@ -39,9 +39,11 @@ function SignupFormModal() {
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
-      {errors.server && <p>{errors.server}</p>}
+    <div className="signup-modal">
+      <h2>Sign Up</h2>
+      {errors.server && 
+        <p className="signup-errors">*{errors.server}</p>}
+
       <form onSubmit={handleSubmit}>
         <label>
           Email
@@ -50,9 +52,11 @@ function SignupFormModal() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            id="signup-email-input"
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && 
+          <p className="signup-errors">*{errors.email}</p>}
         <label>
           Username
           <input
@@ -60,9 +64,11 @@ function SignupFormModal() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            id="signup-username"
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && 
+          <p className="signup-errors">*{errors.username}</p>}
         <label>
           Password
           <input
@@ -70,9 +76,11 @@ function SignupFormModal() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            id='signup-password'
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && 
+          <p className="signup-errors">*{errors.password}</p>}
         <label>
           Confirm Password
           <input
@@ -82,10 +90,11 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && 
+          <p className="signup-errors">*{errors.confirmPassword}</p>}
+        <button type="submit" className="buttons-wiz-hover">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

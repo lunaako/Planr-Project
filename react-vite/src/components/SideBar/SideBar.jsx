@@ -55,15 +55,15 @@ export default function SideBar() {
   return (
   <div className='side-bar-container'>
     <div className='side-bar-buttons'>
-      <button onClick={() => navigate('/')}>
+      <button onClick={() => navigate('/')} className='buttons-wiz-hover'>
         Home
       </button>
       
-      <button>
+      <button className='buttons-wiz-hover'>
         Template(TBD)
       </button>
 
-      <button>
+      <button className='buttons-wiz-hover'>
         Enter Your WorkPlace
       </button>
     </div>
@@ -93,8 +93,13 @@ export default function SideBar() {
             handleMenu(e, board.id);
           };
 
-          return (<li key={board.id} onClick={handleDetailBoard} className={`side-bar-board-item ${isOpen ? 'open' : ''}`}>
-            <div>{board.name}</div>
+          return (<li 
+                    key={board.id} 
+                    onClick={handleDetailBoard} 
+                    className={`side-bar-board-item ${isOpen ? 'open' : ''}`}
+                  >
+                    
+            <div className='side-bar-board-name'>{board.name}</div>
             <div className='side-bar-board-actions'>
               <span className='side-bar-board-action-ellipsis-button'><FontAwesomeIcon icon={faEllipsis} onClick={handleMenuClick} /></span>
               {isOpen && (<div className='board-update-display' ref={(el) => (menuRefs.current[board.id] = el)} onClick={(e) => e.stopPropagation()}>
