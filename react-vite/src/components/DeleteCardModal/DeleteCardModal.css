@@ -1,0 +1,19 @@
+.delete-card-modal-self {
+  padding: 20px;
+  text-align: center;
+}
+
+.delete-card-header h2 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.delete-card-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-card-yes:hover {
+  background-color: #d0cccc;
+  border: none;
+}

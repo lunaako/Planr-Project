@@ -1,8 +1,7 @@
 import { useModal } from '../../context/Modal';
 import { useDispatch } from "react-redux";
-import { deleteBoardThunk } from '../../redux/board';
 import { deleteCardThunk } from '../../redux/card';
-
+import './DeleteCardModal.css'
 
 
 export default function DeleteCardModal({cardId}) {
@@ -15,25 +14,28 @@ export default function DeleteCardModal({cardId}) {
   }
 
   return (
-    <div>
+    <div className='delete-card-modal-self'>
       <div className='delete-card-header'>
         <h2>Confirm Delete</h2>
         <p>Are you sure you want to delete this card?</p>
       </div>
 
-      <button
-        className='delete-card-yes'
-        onClick={handleDelete}
-      >
-        Yes
-      </button>
+      <div className='delete-card-buttons'>
+        <button
+          className='delete-card-yes'
+          onClick={handleDelete}
+        >
+          Yes (Delete card)
+        </button>
 
-      <button
-        className='delete-card-no'
-        onClick={() => closeModal()}
-      >
-        No 
-      </button>
+        <button
+          className='delete-card-no buttons-wiz-hover'
+          onClick={() => closeModal()}
+        >
+          No (Keep card)
+        </button>
+      </div>
+      
 
     </div>
   )
