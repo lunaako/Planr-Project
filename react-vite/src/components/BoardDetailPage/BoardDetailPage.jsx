@@ -64,7 +64,7 @@ export default function BoardDetailPage() {
   }, [dispatch, boardId])
 
   if (!user) return (<LoginFormPage />)
-  if (!currBoard) return <>Loading...</>
+  if (!currBoard) return <>Oops, this board doesn't exist...</>
 
   return (
     <div className="board-container">

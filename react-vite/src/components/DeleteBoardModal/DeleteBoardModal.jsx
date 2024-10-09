@@ -2,12 +2,14 @@ import { useModal } from '../../context/Modal';
 import { useDispatch } from "react-redux";
 import { deleteBoardThunk } from '../../redux/board';
 import './DeleteBoardModal.css'
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function DeleteBoardModal({boardId}) {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // console.log(boardId)
 
   const handleDelete = () => {
