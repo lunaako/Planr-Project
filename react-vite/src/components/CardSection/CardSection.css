@@ -2,15 +2,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 50px;
+  height: 30px;
   cursor: pointer;
 }
 
 .card-section-container {
   min-width: 200px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: none;
+  border-radius: 10px;
   padding: 1%;
+  background-color: #f1f2f4;
+}
+
+.card-section-container p {
+  color: black;
 }
 
 .card-section-add-card {
@@ -41,10 +46,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 0.6px solid #ccc;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding-left: 4px;
+  margin-bottom: 1rem;
 }
 
 .card-section-container button{
   border: none;
+  background-color: transparent;
 }
 
 .card-section-title p {
@@ -61,6 +72,7 @@
 .card-section-title input {
   font-weight: bold;
   padding: 1%;
+  margin-top: 0px;
 }
 
 #card-section-add-card-button {
@@ -71,3 +83,8 @@
 .card-section-add-card-input {
   gap: 0.4rem;
 }
+
+.add-card-icon {
+  color: black;
+}
+

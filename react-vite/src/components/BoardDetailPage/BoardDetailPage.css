@@ -6,27 +6,29 @@
 }
 
 .board-header {
-  border: 1px solid #ccc;
+  border: 1px solid #6C778E;
   border-left: none;
   border-right: none;
   display: flex;
   align-items: center;
   margin-bottom: 3%;
   cursor: pointer;
+  background-color: #233556;
 }
 
 .board-header h2:hover {
-  background-color: #E8E8E8;
+  background-color: #838CA0;
 }
 
 .board-header h2{
   margin-top: 1%;
   margin-bottom: 1%;
   margin-left: 1%;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   line-height: 1.2;
   padding: 3px;
   border-radius: 5px;
+  font-weight: 200;
 }
 
 .board-detail-main-card {
@@ -41,7 +43,7 @@
 
 .board-name-input{
   font-size: 1.3rem;
-  font-weight: bold;
+  font-weight: 200;
   line-height: 1.2;
   margin-top: 1%;
   margin-bottom: 1%;
@@ -50,19 +52,17 @@
   box-sizing: content-box;
 }
 
-.board-name-input:focus {
-  border-color: #007bff;
-}
-
 .board-detail-main-card > button {
-  border: 1px solid #ccc;
+  border: none;
   min-width: fit-content;
   height: 2rem;
+  background-color: #65728A;
+  color: white;
+  border-radius: 10px;
 }
 
 .board-detail-main-card > button:hover {
-  background-color: #E8E8E8;
-  border: none;
+  background-color: #6B7587;
 }
 
 

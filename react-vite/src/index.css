@@ -10,9 +10,18 @@ button {
   color: black;
   cursor: pointer;
   border-radius: 5px;
-  border: 1px solid black;
+  border: none;
 }
 
-/* body {
-  background-color: #B2CAD5;
-} */
+body {
+  background: rgb(79, 93, 120);
+  background: linear-gradient(142deg, rgba(79, 93, 120, 1) 20%, rgba(35, 53, 86, 1) 65%);
+  color: white;
+}
+
+input {
+  border-radius: 5px;
+  border: none;
+}
+
+

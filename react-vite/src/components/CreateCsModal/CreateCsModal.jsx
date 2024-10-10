@@ -21,17 +21,25 @@ export default function CreateCsModal({boardId}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    disptach(createCardSectionThunk(boardId, {title: csTitle}))
-      .then(closeModal)
+    let errs = {};
+    if(!csTitle) {
+      errs.title = 'Card section title is required'
+    }
+    setErrors(errs);
+
+    if(!Object.values(errs).length) {
+      disptach(createCardSectionThunk(boardId, { title: csTitle }))
+        .then(closeModal)
+    }
   }
 
   return (
-    <div>
-      <h3>
+    <div className='create-cs-self'>
+      <h2>
         Create a new Card Section
-      </h3>
+      </h2>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>
           Title
           <input 
@@ -39,10 +47,11 @@ export default function CreateCsModal({boardId}) {
             value={csTitle}
             onChange={(e) => setCsTitle(e.target.value)}
             required
+            className='create-cs-input'
           />
         </label>
 
-        {errors.title && <p>{errors.title}</p>}
+        {errors.title && <p>*{errors.title}</p>}
 
         <button
           type='submit'

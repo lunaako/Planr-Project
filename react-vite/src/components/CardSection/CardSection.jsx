@@ -165,7 +165,7 @@ export default function CardSection({cardSec}) {
         onClick={handleAddCard}
         className='card-section-add-card'
         >
-          <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={faPlus} className='add-card-icon'/>
           <p>Add a card</p>
         </div>
         )  
