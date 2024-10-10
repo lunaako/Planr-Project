@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { createCardThunk, getCardsThunk, updateCardThunk } from "../../redux/card";
+import { updateCardThunk } from "../../redux/card";
 import { PiSubtitles } from "react-icons/pi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAlignLeft, faTag, faCalendar } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,7 @@ export default function UpdateCardModal({card}) {
   const [isDesUpdate, setIsDesUpdate] = useState(card?.description === '' || false)
   const [name, setName] = useState(card?.name || '')
   const [description, setDescription] = useState(card?.description || '')
+  const [originalDescription, setOriginalDescription] = useState(card?.description || '');
   const [labels, setLabels] = useState(card?.labels || '')
   const [dueDate, setDueDate] = useState(card?.dueDate ? new Date(card.dueDate) : null)
   const [errors, setErrors] = useState({})
@@ -26,6 +27,7 @@ export default function UpdateCardModal({card}) {
     if(updatedCard) {
       setName(updatedCard.name);
       setDescription(updatedCard.description);
+      setOriginalDescription(updatedCard.description);
       setLabels(updatedCard.labels);
       setDueDate(updatedCard.dueDate ? new Date(updatedCard.dueDate) : null);
     }
@@ -84,12 +86,6 @@ export default function UpdateCardModal({card}) {
     }
     setErrors(errs)
 
-    // console.log(dueDate)
-    // console.log(dueDate.toISOString())
-    // console.log(dueDate.toLocaleDateString())
-    // console.log(dueDate.toLocaleString())
-    // console.log(dueDate.toLocaleTimeString())
-
 
     if (!Object.values(errors).length) {
       let newCard = {
@@ -101,14 +97,29 @@ export default function UpdateCardModal({card}) {
 
       dispatch(updateCardThunk(card.id, newCard))
         .then(() => {
+          setOriginalDescription(description);
           setIsDesUpdate(false)
         })
     }
   }
 
-  
+  const handleRemoveLabel = () => {
+    setLabels('')
+  }
+
+  useEffect(() => {
+    if (labels === '') {
+      handleUpdate('labels')
+    }
+  }, [labels])
+
+  const handleCancelDescriptionUpdate = () => {
+    setDescription(originalDescription); // Revert description back to the original value
+    setIsDesUpdate(false); // Close the editing mode
+  };
+
   return (
-    <div>
+    <div className="update-card-modal-self">
       <div className="update-card-title">
         <PiSubtitles />
         { isEditing ? (
@@ -131,29 +142,42 @@ export default function UpdateCardModal({card}) {
       <div className="update-card-des">
         <div className="update-des-title">
           <div className="update-des-left">
-            <FontAwesomeIcon icon={faAlignLeft} />
+            <FontAwesomeIcon icon={faAlignLeft} className="update-des-icon"/>
             <h4>Description</h4>
           </div>
 
           <button
             onClick={() => setIsDesUpdate(true)}
+            className="buttons-wiz-hover"
           >Edit</button>
           
         </div>
 
         {!isDesUpdate ? (
-          <p>{description || 'No description'}</p>
+          <p className="des-paragraph">
+            {description || 'No description'}
+          </p>
         ) : (
-          <div>
+          <div className="des-update-text-area">
             <textarea 
               placeholder="Add a more detailed description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <button 
-              onClick={() => handleUpdate('description')}
-            >Save</button>
-            <button onClick={() => setIsDesUpdate(false)}>Cancel</button>
+
+            <div className="des-update-buttons">
+              <button
+                onClick={() => handleUpdate('description')}
+                className="des-save buttons-wiz-hover"
+              >Save</button>
+              <button 
+                onClick={handleCancelDescriptionUpdate}
+                className="buttons-wiz-hover"
+              >
+                Cancel
+              </button>
+            </div>
+            
           </div>
         )
         }
@@ -161,14 +185,23 @@ export default function UpdateCardModal({card}) {
 
       <div className="update-card-label-container">
         <div className="update-labels-header">
-          <FontAwesomeIcon icon={faTag} />
-          <h4>Labels</h4>
+          <div className="update-labels-left">
+            <FontAwesomeIcon icon={faTag} />
+            <h4>Labels</h4>
+          </div>
+          
+          <button
+            className="remove-label buttons-wiz-hover"
+            onClick={handleRemoveLabel}
+          >
+            Remove label
+          </button>
         </div>
 
         <div className="update-labels-display">
           {
-            labels ? (
-              <p>{updatedCard?.labels}</p>
+            updatedCard?.labels ? (
+              <p className="labels-p">{updatedCard?.labels}</p>
             ) : (
               <p>No Lables</p>
             )
@@ -185,7 +218,11 @@ export default function UpdateCardModal({card}) {
             <option value="Medium Priority">Medium Priority</option>
             <option value="High Priority">High Priority</option>
           </select>
-          <button onClick={() => handleUpdate('labels')}>
+
+          <button 
+            onClick={() => handleUpdate('labels')}
+            className="buttons-wiz-hover update-label-button"
+          >
             {labels ? 'Change Labels' : 'Create Labels'}
           </button>
         </div>
@@ -207,14 +244,16 @@ export default function UpdateCardModal({card}) {
           }
         </div>
 
-        <div className="update-duedate-update">
+        <div className="update-duedate">
           <DatePicker 
           selected={dueDate} 
           onChange={(date) => setDueDate(date)}
-          dateFormat='yyyy-MM-dd' 
+          dateFormat='yyyy-MM-dd'
+          className="date-picker" 
           />
           <button
             onClick={() => handleUpdate('dueDate')}
+            className="buttons-wiz-hover"
           >
             {
               updatedCard?.dueDate ? 'Change Due Date' : 'Create Due Date'

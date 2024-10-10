@@ -51,6 +51,7 @@
   width: fit-content;
   min-width: 100px;
   text-align: center;
+  background-color: white;
 }
 
 .buttons-wiz-hover {

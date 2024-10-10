@@ -1,20 +1,134 @@
+.update-card-modal {
+  width: 500px;
+}
+
 .update-card-title {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
+.update-card-title h3 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.update-card-title h3:hover {
+  background-color: #E8E8E8;
+}
+
+.update-card-title input {
+  padding: 2px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+
 .update-des-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.update-des-icon {
+  font-size: 0.8rem;
+}
+
+.des-paragraph {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.des-update-text-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.des-save {
+  margin-right: 4px;
+}
+
+.update-des-left,
+.update-duedate-header,
+.update-labels-left {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.update-des-left,
-.update-duedate-header,
+.update-card-modal-self {
+  padding: 20px;
+}
+
+.update-labels-display p {
+  margin-top: 0px;
+}
+
+.labels-p {
+  background-color: #083d77;
+  color: white;
+  width: fit-content;
+  padding: 2px 10px;
+  border-radius: 5px;
+  font-size: small;
+}
+
 .update-labels-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
 }
+
+.remove-label {
+  height: fit-content;
+}
+
+.update-labels-update {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.update-label-button {
+  width: 40%;
+}
+
+.update-duedate-display p {
+  margin-top: 0px;
+}
+
+.update-duedate {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.update-duedate button {
+  width: 30%;
+}
+
+.react-datepicker__current-month {
+  font-weight: 500 !important;
+  font-size: 16px !important;
+}
+
+.react-datepicker__triangle {
+  left: 20px !important;
+}
+
+.react-datepicker__navigation--previous {
+  top: 12px;
+  left: -10px !important;
+}
+
+.react-datepicker__navigation--next {
+  top: 12px;
+  right: -10px !important;
+}
+
+
 

@@ -134,6 +134,7 @@ export default function CardSection({cardSec}) {
             <OpenModalButton
               buttonText={<FontAwesomeIcon icon={faPen} />}
               modalComponent={<UpdateCardModal card={card} csId={csId} />}
+              modalClassName='update-card-modal'
             />
           </div>  
       </div>
