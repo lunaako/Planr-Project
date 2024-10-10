@@ -8,6 +8,7 @@ import { PiSubtitles } from "react-icons/pi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAlignLeft, faTag, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import './UpdateCardModal.css';
+import changeLabelColor from "../../utils/labelHelper";
 
 export default function UpdateCardModal({card}) {
   const dispatch = useDispatch();
@@ -73,9 +74,6 @@ export default function UpdateCardModal({card}) {
     setName(card?.name || '')
   }, [card])
 
-  // console.log(card);
-
-
   const handleUpdate = (label) => {
     const errs = {}
     if (label === 'name' && name.length > 50) {
@@ -85,7 +83,6 @@ export default function UpdateCardModal({card}) {
       errs.description = 'Description should be within 500 characters'
     }
     setErrors(errs)
-
 
     if (!Object.values(errors).length) {
       let newCard = {
@@ -201,7 +198,12 @@ export default function UpdateCardModal({card}) {
         <div className="update-labels-display">
           {
             updatedCard?.labels ? (
-              <p className="labels-p">{updatedCard?.labels}</p>
+              <p 
+                className='labels-p'
+                id={changeLabelColor(updatedCard.labels)}
+              >
+                {updatedCard?.labels}
+              </p>
             ) : (
               <p>No Lables</p>
             )

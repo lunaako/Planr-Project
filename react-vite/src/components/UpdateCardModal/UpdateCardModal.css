@@ -69,7 +69,6 @@
 }
 
 .labels-p {
-  background-color: #083d77;
   color: white;
   width: fit-content;
   padding: 2px 10px;
@@ -128,6 +127,18 @@
 .react-datepicker__navigation--next {
   top: 12px;
   right: -10px !important;
+}
+
+#label-green {
+  background-color: #AFE1AF;
+}
+
+#label-blue {
+  background-color: #89CFF0;
+}
+
+#label-red {
+  background-color: #FF3131;
 }
 
 
