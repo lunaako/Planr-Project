@@ -38,6 +38,7 @@
   align-items: center;
   justify-content: space-between;
   gap:5px;
+  height: 0.9rem;
 }
 
 .side-bar-boards-header button {
