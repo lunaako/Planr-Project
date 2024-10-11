@@ -1,5 +1,8 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const GET_FAVS = 'session/getFavs';
+const ADD_FAV = 'session/addFav';
+const DELETE_FAV = 'session/deleteFav';
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -9,6 +12,27 @@ const setUser = (user) => ({
 const removeUser = () => ({
   type: REMOVE_USER
 });
+
+const getFavs = (payload) => {
+  return {
+    type: GET_FAVS,
+    payload
+  }
+}
+
+const addFav = (payload) => {
+  return {
+    type: ADD_FAV,
+    payload
+  }
+}
+
+const deleteFav = (payload) => {
+  return {
+    type: DELETE_FAV,
+    payload
+  }
+}
 
 export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
@@ -63,14 +87,82 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
-const initialState = { user: null };
+export const getFavsThunk = () => async(dispatch) => {
+  const res = await fetch('/api/favorites');
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(getFavs(data));
+    return data;
+  } else {
+    const err = await res.json();
+    return err;
+  }
+}
+
+export const addFavThunk = (boardId) => async(dispatch) => {
+  const res = await fetch('/api/favorites', {
+    method: 'POST',
+    body: JSON.stringify(boardId),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(addFav(data));
+    return data;
+  } else {
+    const err = await res.json();
+    return err;
+  }
+}
+
+export const deleteFavThunk = (favId) => async(dispatch) => {
+  const res = await fetch(`/api/favorites/${favId}`, {
+    method: 'DELETE'
+  })
+  if (res.ok) {
+    dispatch(deleteFav(favId))
+    return null
+  } else {
+    const err = await res.json()
+    return err;
+  }
+}
+
+const initialState = { user: null, fav: {} };
 
 function sessionReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
       return { ...state, user: action.payload };
     case REMOVE_USER:
-      return { ...state, user: null };
+      return { ...state, user: null, fav: {} };
+    
+    case GET_FAVS: {
+      const newState = {...state}
+      const favs = action.payload
+      favs.forEach(fav => {
+        newState.fav[fav.id] = fav
+      })
+      return newState;
+    }
+
+    case ADD_FAV: {
+      const newState = {...state}
+      const newFav = action.payload
+      if (newState.fav[newFav.id]) {
+        newState.fav[newFav.id] = {...newState.fav[newFav.id], newFav};
+      } else {
+        newState.fav[newFav.id] = newFav;
+      }
+      return newState;
+    }
+
+    case DELETE_FAV: {
+      const newState = {...state}
+      delete newState.fav[action.payload]
+      return newState;
+    }
+
     default:
       return state;
   }

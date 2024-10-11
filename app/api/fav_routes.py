@@ -31,7 +31,7 @@ def create_fav():
   
   existed_fav = Favorite.query.filter(Favorite.board_id == board_id).filter(Favorite.user_id == current_user.id).first()
   if existed_fav:
-    return {'message': 'This board has already been favorited'}
+    return {'message': 'This board has already been favorited'}, 409
   
   new_fav = Favorite(user_id=current_user.id, board_id=board_id)
   db.session.add(new_fav)
