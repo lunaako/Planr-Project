@@ -25,3 +25,9 @@ class Favorite(db.Model):
       "createdAt": self.created_at,
       "updatedAt": self.updated_at
     }
+  
+  def to_dict_board(self):
+     return {
+        **self.to_dict_basic(),
+        "Board": self.board.to_dict_basic()
+     }
