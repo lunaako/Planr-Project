@@ -3,6 +3,7 @@ const REMOVE_USER = 'session/removeUser';
 const GET_FAVS = 'session/getFavs';
 const ADD_FAV = 'session/addFav';
 const DELETE_FAV = 'session/deleteFav';
+const REMOVE_BOARD_FROM_FAV = 'session/removeBoardFromFav';
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -30,6 +31,13 @@ const addFav = (payload) => {
 const deleteFav = (payload) => {
   return {
     type: DELETE_FAV,
+    payload
+  }
+}
+
+export const removeBoardFromFav = (payload) => {
+  return {
+    type: REMOVE_BOARD_FROM_FAV,
     payload
   }
 }
@@ -108,6 +116,7 @@ export const addFavThunk = (boardId) => async(dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(addFav(data));
+    dispatch(getFavsThunk());
     return data;
   } else {
     const err = await res.json();
@@ -121,6 +130,7 @@ export const deleteFavThunk = (favId) => async(dispatch) => {
   })
   if (res.ok) {
     dispatch(deleteFav(favId))
+    dispatch(getFavsThunk());
     return null
   } else {
     const err = await res.json()
@@ -149,18 +159,26 @@ function sessionReducer(state = initialState, action) {
     case ADD_FAV: {
       const newState = {...state}
       const newFav = action.payload
-      if (newState.fav[newFav.id]) {
-        newState.fav[newFav.id] = {...newState.fav[newFav.id], newFav};
-      } else {
-        newState.fav[newFav.id] = newFav;
-      }
+      newState.fav = {...newState.fav, [newFav.id]: newFav}
       return newState;
     }
 
     case DELETE_FAV: {
       const newState = {...state}
-      delete newState.fav[action.payload]
-      return newState;
+      const newFav = {...newState.fav};
+      delete newFav[action.payload]
+      return {...newState, fav: newFav};
+    }
+
+    case REMOVE_BOARD_FROM_FAV: {
+      const entries = Object.entries(state.fav);
+      const filteredEntries = entries.filter(entry => {
+        const [favId, favObj] = entry;
+        return favObj.boardId !== action.payload
+      })
+      const newFav = Object.fromEntries(filteredEntries)
+      const newState = {user: state.user, fav: newFav}
+      return newState
     }
 
     default:

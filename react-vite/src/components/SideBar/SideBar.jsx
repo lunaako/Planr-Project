@@ -42,7 +42,6 @@ export default function SideBar() {
   }, [openMenuId]);
 
   const handleMenu = (e, boardId) => {
-    console.log(menuRefs);
     e.stopPropagation();
     if (openMenuId === boardId) {
       setOpenMenuId(null);

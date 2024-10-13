@@ -12,15 +12,24 @@ import { addFavThunk, deleteFavThunk, getFavsThunk } from "../../redux/session";
 
 export default function LandingPage() {
   const user = useSelector(state => state.session.user);
+  const favs = useSelector(state => state.session.fav);
+  const favArr = Object.values(favs);
   const boards = useSelector(state => state.board);
   const boardsArr = Object.values(boards).filter(board => board.userId === user?.id);
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBoardsThunk());
+    if (user) {
+      dispatch(getBoardsThunk());
+    }
   }, [dispatch, user])
 
+  useEffect(() => {
+    if (user) {
+      dispatch(getFavsThunk());
+    }
+  }, [dispatch, boards, user])
 
   if (!user) {
     return <LoginFormPage />
@@ -38,16 +47,23 @@ export default function LandingPage() {
           <FontAwesomeIcon icon={faBriefcase} className="landing-allboards-icon" />
           Starred boards
         </h3>
-        <button
-          onClick={() => dispatch(getFavsThunk())}
-        >Test get fav</button>
-        <button
-          onClick={() => dispatch(addFavThunk({board_id: 1}))}
-        >Test add fav</button>
-        <button
-          onClick={() => dispatch(deleteFavThunk(4))}
-        >Test delete fav</button>
-         ❤️Fav feature Coming Soon...
+
+        {favArr.length ? (
+          <div className="landing-boards-block">
+            {favArr?.map(fav => (
+              <div 
+                key={fav.id}
+                className="landing-board" 
+                onClick={() => navigate(`/boards/${fav.Board.id}`)}
+              >
+                <img src={cardSecImg} alt='card section image' className="landing-board-imgs" />
+                <p>{fav.Board.name}</p>
+              </div>
+            ))}
+          </div>) : (
+            " "
+          )
+        }
       </div>
 
       <div className="landing-all-boards">

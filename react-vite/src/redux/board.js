@@ -1,3 +1,5 @@
+import { removeBoardFromFav } from "./session";
+
 const GET_BOARDS = 'board/get';
 const GET_BOARD = 'board/getOne';
 const UPDATE_BOARD = 'board/update';
@@ -101,6 +103,7 @@ export const deleteBoardThunk = (boardId) => async(dispatch) => {
   })
   if (res.ok) {
     dispatch(deleteBoard(boardId))
+    dispatch(removeBoardFromFav(boardId))
     return null
   } else {
     const err = await res.json()

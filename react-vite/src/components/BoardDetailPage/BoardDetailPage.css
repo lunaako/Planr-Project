@@ -14,6 +14,7 @@
   margin-bottom: 3%;
   cursor: pointer;
   background-color: #233556;
+  gap: 1rem;
 }
 
 .board-header h2:hover {
@@ -50,6 +51,7 @@
   margin-left: 1%;
   padding: 3px;
   box-sizing: content-box;
+  width: 5rem;
 }
 
 .board-detail-main-card > button {
@@ -64,6 +66,8 @@
 .board-detail-main-card > button:hover {
   background-color: #6B7587;
 }
+
+
 
 
 
