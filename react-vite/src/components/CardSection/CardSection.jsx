@@ -19,6 +19,7 @@ export default function CardSection({cardSec}) {
   const [isEditing, setIsEditing] = useState(false)
   const [csName, setCsName] = useState(cardSec?.title || '')
   const [cardName, setCardName] = useState('')
+  const [cardErr, setCardErr] = useState({})
   const [isCreateCard, setIsCreateCard] = useState(false)
 
   const cardInputRef = useRef(null)
@@ -29,8 +30,17 @@ export default function CardSection({cardSec}) {
   }
 
   const handleCardNameInput = (e) => {
+    if (Object.values(cardErr).length) return;
     setCardName(e.target.value)
   }
+
+  useEffect(() => {
+    const errors = {};
+    if (cardName.length > 50) {
+      errors.cardName = 'Card name should be within 50 characters'
+    }
+    setCardErr(errors);
+  }, [cardName])
 
   const handleCardSubmit = (e) => {
     e.preventDefault()
@@ -142,7 +152,10 @@ export default function CardSection({cardSec}) {
 
         { isCreateCard ?
         (
-          <form className='card-section-add-card-input' ref={cardInputRef}>
+          <form className='card-section-add-card-input' 
+            ref={cardInputRef}
+            onSubmit={handleCardSubmit}
+          >
               <input
                 type='text'
                 value={cardName}
@@ -150,9 +163,11 @@ export default function CardSection({cardSec}) {
                 placeholder='Enter a name for this card'
                 autoFocus
               />
+              {cardErr.cardName && <p id='card-section-card-name-err'>*{cardErr.cardName}</p>}
               <button
                 type='submit'
-                onClick={handleCardSubmit}
+                // onClick={handleCardSubmit}
+                disabled={Object.values(cardErr)}
                 className='buttons-wiz-hover'
                 id='card-section-add-card-button'
               >
