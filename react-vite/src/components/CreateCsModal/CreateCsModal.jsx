@@ -55,6 +55,7 @@ export default function CreateCsModal({boardId}) {
 
         <button
           type='submit'
+          disabled={Object.values(errors).length}
           onClick={handleSubmit}
         >
           Create
