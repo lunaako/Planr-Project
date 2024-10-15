@@ -166,7 +166,6 @@ export default function CardSection({cardSec}) {
               {cardErr.cardName && <p id='card-section-card-name-err'>*{cardErr.cardName}</p>}
               <button
                 type='submit'
-                // onClick={handleCardSubmit}
                 disabled={Object.values(cardErr)}
                 className='buttons-wiz-hover'
                 id='card-section-add-card-button'
