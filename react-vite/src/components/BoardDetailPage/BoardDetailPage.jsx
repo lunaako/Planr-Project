@@ -86,12 +86,6 @@ export default function BoardDetailPage() {
     dispatch(getCardSectionsThunk(boardId))
   }, [dispatch, boardId])
 
-  console.log(favArr)
-  console.log(isStarred)
-  console.log(favedBoard)
-  console.log(boardId)
-
-
   if (!user) return (<LoginFormPage />)
   if (!currBoard) return <> Oops, this board doesn't exist...</>
 

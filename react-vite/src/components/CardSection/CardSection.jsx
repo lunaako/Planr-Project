@@ -4,11 +4,11 @@ import './CardSection.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCardSectionThunk } from '../../redux/cardSection'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import OpenModalButton from '../OpenModalButton';
 import DeleteCardSectionModal from '../DeleteCardSectionModal'
-import DeleteCardModal from '../DeleteCardModal/DeleteCardModal'
-import UpdateCardModal from '../UpdateCardModal/UpdateCardModal'
+
+import Cards from '../Cards/Cards'
 
 
 export default function CardSection({cardSec}) {
@@ -30,7 +30,6 @@ export default function CardSection({cardSec}) {
   }
 
   const handleCardNameInput = (e) => {
-    if (Object.values(cardErr).length) return;
     setCardName(e.target.value)
   }
 
@@ -44,6 +43,7 @@ export default function CardSection({cardSec}) {
 
   const handleCardSubmit = (e) => {
     e.preventDefault()
+    if (Object.values(cardErr).length) return;
     dispatch(createCardThunk(csId, {name: cardName}))
     setCardName('')
     setIsCreateCard(false)
@@ -133,22 +133,9 @@ export default function CardSection({cardSec}) {
 
       
       <div className='card-section-cards'>
-       {cardArr.map(card => {
-        return <div key={card.id} className='card-section-card-row'>
-                <p>{card.name}</p>
-          <div className='card-section-card-row-icons'>
-            <OpenModalButton
-              buttonText={<FontAwesomeIcon icon={faTrash} />}
-              modalComponent={<DeleteCardModal cardId={card.id} />}
-            />
-            <OpenModalButton
-              buttonText={<FontAwesomeIcon icon={faPen} />}
-              modalComponent={<UpdateCardModal card={card} csId={csId} />}
-              modalClassName='update-card-modal'
-            />
-          </div>  
-      </div>
-       })}
+       {cardArr.map(card => (
+        <Cards card={card} csId={csId} />
+       ))}
 
         { isCreateCard ?
         (
@@ -166,7 +153,7 @@ export default function CardSection({cardSec}) {
               {cardErr.cardName && <p id='card-section-card-name-err'>*{cardErr.cardName}</p>}
               <button
                 type='submit'
-                disabled={Object.values(cardErr)}
+                disabled={Object.values(cardErr).length}
                 className='buttons-wiz-hover'
                 id='card-section-add-card-button'
               >
