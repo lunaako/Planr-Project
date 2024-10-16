@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import Card, CardSection, db
 from app.forms import CardForm
@@ -37,6 +37,9 @@ def edit_card(cardId):
 @card_routes.route('<int:cardId>', methods=['DELETE'])
 @login_required
 def delete_card(cardId):
+  """
+  Delete a card based on its id when the user is logged in
+  """
   card = Card.query.get(cardId)
   if not card:
     return {"message": "Card couldn't be found"}
@@ -47,3 +50,29 @@ def delete_card(cardId):
   db.session.delete(card)
   db.session.commit()
   return {"message": "Successfully deleted"}
+
+
+@card_routes.route('/reorder', methods=['PUT'])
+@login_required
+def reorder_card():
+  data = request.get_json()
+  reordered_cards = data['reorderedCards']
+
+  if not isinstance(reordered_cards, list):
+    return {"message" : "Invalid data format"}, 400
+
+  for card in reordered_cards:
+    if not all(key in card for key in ['id', 'order', 'card_section_id']):
+      return {"message": f"Missing required fields in card data: {card}"}, 400
+    
+    if not isinstance(card['id'], int) or not isinstance(card['order'], int):
+      return {"message": f"Invalid data types in card: {card}"}, 400
+    
+    card_in_db = Card.query.get(card['id'])
+    if card_in_db:
+      card_in_db.order = card['order']
+      card_in_db.card_section_id = card['card_section_id']
+      db.session.add(card_in_db)
+  db.session.commit()
+
+  return jsonify(reordered_cards)

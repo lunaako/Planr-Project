@@ -105,11 +105,11 @@ export default function CardSection({cardSec}) {
 
   if (!cardSec) return <>Loading</>
 
-  // const handleDragEnd = (e) => {
-  //   const {active, over} = e;
-  //   if(active.id === over.id) return;
+  const handleDragEnd = (e) => {
+    const {active, over} = e;
+    if(active.id === over.id) return;
 
-  // }
+  }
 
 
   return (
@@ -139,7 +139,7 @@ export default function CardSection({cardSec}) {
       </div>
 
       <DndContext collisionDetection={closestCorners}
-        // onDragEnd={handleDragEnd}
+        onDragEnd={handleDragEnd}
       >
         <SortableContext items={cardArr.map(card => card.id.toString())} strategy={verticalListSortingStrategy}>
           <div className='card-section-cards'>
