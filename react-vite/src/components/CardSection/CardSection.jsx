@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import OpenModalButton from '../OpenModalButton';
 import DeleteCardSectionModal from '../DeleteCardSectionModal'
-
 import Cards from '../Cards/Cards'
+import { closestCorners, DndContext } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 
 export default function CardSection({cardSec}) {
@@ -104,6 +105,12 @@ export default function CardSection({cardSec}) {
 
   if (!cardSec) return <>Loading</>
 
+  // const handleDragEnd = (e) => {
+  //   const {active, over} = e;
+  //   if(active.id === over.id) return;
+
+  // }
+
 
   return (
     <div className='card-section-container'>
@@ -131,47 +138,54 @@ export default function CardSection({cardSec}) {
 
       </div>
 
+      <DndContext collisionDetection={closestCorners}
+        // onDragEnd={handleDragEnd}
+      >
+        <SortableContext items={cardArr.map(card => card.id.toString())} strategy={verticalListSortingStrategy}>
+          <div className='card-section-cards'>
+            {cardArr.map(card => (
+              <Cards card={card} csId={csId} key={card.id} />
+            ))}
+
+            {isCreateCard ?
+              (
+                <form className='card-section-add-card-input'
+                  ref={cardInputRef}
+                  onSubmit={handleCardSubmit}
+                >
+                  <input
+                    type='text'
+                    value={cardName}
+                    onChange={handleCardNameInput}
+                    placeholder='Enter a name for this card'
+                    autoFocus
+                  />
+                  {cardErr.cardName && <p id='card-section-card-name-err'>*{cardErr.cardName}</p>}
+                  <button
+                    type='submit'
+                    disabled={Object.values(cardErr).length}
+                    className='buttons-wiz-hover'
+                    id='card-section-add-card-button'
+                  >
+                    Add card
+                  </button>
+                </form>
+
+              ) : (
+                <div
+                  onClick={handleAddCard}
+                  className='card-section-add-card'
+                >
+                  <FontAwesomeIcon icon={faPlus} className='add-card-icon' />
+                  <p>Add a card</p>
+                </div>
+              )
+            }
+          </div>
+        </SortableContext>
+        
+      </DndContext>
       
-      <div className='card-section-cards'>
-       {cardArr.map(card => (
-        <Cards card={card} csId={csId} />
-       ))}
-
-        { isCreateCard ?
-        (
-          <form className='card-section-add-card-input' 
-            ref={cardInputRef}
-            onSubmit={handleCardSubmit}
-          >
-              <input
-                type='text'
-                value={cardName}
-                onChange={handleCardNameInput}
-                placeholder='Enter a name for this card'
-                autoFocus
-              />
-              {cardErr.cardName && <p id='card-section-card-name-err'>*{cardErr.cardName}</p>}
-              <button
-                type='submit'
-                disabled={Object.values(cardErr).length}
-                className='buttons-wiz-hover'
-                id='card-section-add-card-button'
-              >
-                Add card
-              </button>
-          </form>
-
-        ) : (
-        <div 
-        onClick={handleAddCard}
-        className='card-section-add-card'
-        >
-          <FontAwesomeIcon icon={faPlus} className='add-card-icon'/>
-          <p>Add a card</p>
-        </div>
-        )  
-        }
-      </div>
 
     </div>
   )
