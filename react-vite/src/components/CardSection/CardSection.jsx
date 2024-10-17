@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { createCardThunk, getCardsThunk } from '../../redux/card'
+import { createCardThunk, getCardsThunk, reorderCardThunk } from '../../redux/card'
 import './CardSection.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCardSectionThunk } from '../../redux/cardSection'
@@ -16,7 +16,7 @@ export default function CardSection({cardSec}) {
   const dispatch = useDispatch()
   const cards = useSelector(state => state.card)
   const csId = cardSec.id
-  const cardArr = Object.values(cards).filter(card => card.cardSectionId === csId)
+  const cardArr = Object.values(cards).filter(card => card.cardSectionId === csId).sort((a, b) => a.order - b.order)
   const [isEditing, setIsEditing] = useState(false)
   const [csName, setCsName] = useState(cardSec?.title || '')
   const [cardName, setCardName] = useState('')
@@ -107,9 +107,25 @@ export default function CardSection({cardSec}) {
 
   const handleDragEnd = (e) => {
     const {active, over} = e;
-    if(active.id === over.id) return;
+    if(!over || active.id === over.id) return;
 
+    console.log(active.id, over.id);
+
+    const oldIndex = cardArr.findIndex(card => card.id === active.id);
+    const newIndex = cardArr.findIndex(card => card.id === over.id);
+    console.log(oldIndex, newIndex)
+
+    if (oldIndex !== -1 && newIndex !== -1) {
+
+      const updatedCards = [...cardArr];
+      console.log(cardArr)
+      const [movedCard] = updatedCards.splice(oldIndex, 1);
+      updatedCards.splice(newIndex, 0, movedCard);
+      console.log(updatedCards)
+      dispatch(reorderCardThunk({reorderedCards: updatedCards}))
+    }
   }
+  console.log(cardArr)
 
 
   return (
@@ -141,7 +157,7 @@ export default function CardSection({cardSec}) {
       <DndContext collisionDetection={closestCorners}
         onDragEnd={handleDragEnd}
       >
-        <SortableContext items={cardArr.map(card => card.id.toString())} strategy={verticalListSortingStrategy}>
+        <SortableContext items={cardArr.map(card => card.id)} strategy={verticalListSortingStrategy}>
           <div className='card-section-cards'>
             {cardArr.map(card => (
               <Cards card={card} csId={csId} key={card.id} />

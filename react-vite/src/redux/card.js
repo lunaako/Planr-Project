@@ -2,6 +2,7 @@ const GET_CARDS = 'card/get';
 const CREATE_CARD = 'card/create';
 const UPDATE_CARD = 'card/update';
 const DELETE_CARD = 'card/delete';
+const REORDER_CARD = 'card/reorder';
 
 const getCards = (payload) => {
   return {
@@ -27,6 +28,13 @@ const updateCard = (payload) => {
 const deleteCard = (payload) => {
   return {
     type: DELETE_CARD,
+    payload
+  }
+}
+
+const reorderCard = (payload) => {
+  return {
+    type: REORDER_CARD,
     payload
   }
 }
@@ -89,6 +97,22 @@ export const deleteCardThunk = (cardId) => async(dispatch) => {
   }
 }
 
+export const reorderCardThunk = (reorderCards) => async(dispatch) => {
+  const res = await fetch(`/api/cards/reorder`, {
+    method: 'PUT',
+    body: JSON.stringify(reorderCards),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  if(res.ok) {
+    const data = await res.json()
+    dispatch(reorderCard(data))
+    return data;
+  } else {
+    const err = await res.json()
+    return err;
+  }
+}
+
 
 function cardReducer(state={}, action) {
   switch(action.type) {
@@ -121,6 +145,16 @@ function cardReducer(state={}, action) {
     case DELETE_CARD: {
       const newState = {...state}
       delete newState[action.payload]
+      return newState;
+    }
+
+    case REORDER_CARD: {
+      const newState = {...state}
+      const reorderedCards = action.payload
+      reorderedCards.forEach(card => {
+        newState[card.id].cardSectionId = card.cardSectionId
+        newState[card.id].order = card.order
+      })
       return newState;
     }
 

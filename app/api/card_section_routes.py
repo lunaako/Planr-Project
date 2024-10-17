@@ -87,8 +87,13 @@ def create_card(id):
 
   if form.validate_on_submit():
     if not form.data['order']:
-      max_order = Card.query.order_by(Card.order.desc()).first().order
-      new_order = (max_order or 0) + 1
+      curr_cards = Card.query.filter_by(card_section_id=card_section.id).all()
+      if not curr_cards:
+        new_order = 0
+      else:
+        max_order = Card.query.filter_by(card_section_id=card_section.id).order_by(Card.order.desc()).first().order
+        new_order = max_order + 1
+
     else:
       new_order = form.data['order']
 

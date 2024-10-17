@@ -57,21 +57,23 @@ def delete_card(cardId):
 def reorder_card():
   data = request.get_json()
   reordered_cards = data['reorderedCards']
-
+  print(reordered_cards)
   if not isinstance(reordered_cards, list):
     return {"message" : "Invalid data format"}, 400
-
+  
   for card in reordered_cards:
-    if not all(key in card for key in ['id', 'order', 'card_section_id']):
+    print(card)
+    if not all(key in card for key in ['id', 'order', 'cardSectionId']):
       return {"message": f"Missing required fields in card data: {card}"}, 400
     
     if not isinstance(card['id'], int) or not isinstance(card['order'], int):
       return {"message": f"Invalid data types in card: {card}"}, 400
     
     card_in_db = Card.query.get(card['id'])
+    print(card_in_db)
     if card_in_db:
       card_in_db.order = card['order']
-      card_in_db.card_section_id = card['card_section_id']
+      card_in_db.card_section_id = card['cardSectionId']
       db.session.add(card_in_db)
   db.session.commit()
 
