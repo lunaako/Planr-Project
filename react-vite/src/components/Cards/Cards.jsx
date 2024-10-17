@@ -8,7 +8,12 @@ import {CSS} from '@dnd-kit/utilities';
 
 export default function Cards({card, csId}) {
   // console.log(card.id)
-  const {attributes, listeners, setNodeRef, transform, transition} = useSortable({id: card.id})
+  const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
+    id: card.id,
+    data: {
+      cardSectionId: csId
+    }
+  })
 
   const style = {
     transition,

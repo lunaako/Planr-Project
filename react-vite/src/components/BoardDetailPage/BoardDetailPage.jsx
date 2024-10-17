@@ -11,7 +11,8 @@ import CreateCsModal from "../CreateCsModal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as regularFaStar} from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidFaStar } from '@fortawesome/free-solid-svg-icons';
-
+import { closestCorners, DndContext } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { addFavThunk, deleteFavThunk, getFavsThunk } from "../../redux/session";
 
 
@@ -30,6 +31,8 @@ export default function BoardDetailPage() {
   const [boardName, setBoardName] = useState(currBoard?.name || '');
   const [isStarred, setIsStarred] = useState(favedBoard !== undefined);
   const dispatch = useDispatch();
+  // const cards = useSelector(state => state.card)
+  // const cardArr = Object.values(cards)
 
   useEffect(() => {
     setIsStarred(favedBoard !== undefined)
@@ -89,6 +92,22 @@ export default function BoardDetailPage() {
   if (!user) return (<LoginFormPage />)
   if (!currBoard) return <> Oops, this board doesn't exist...</>
 
+  // const handleDragEnd = ({active, over}) => {
+  //   if (!over || active.id === over.id) return;
+  //   const oldSectionId = active.data?.cardSectionId;
+  //   const newSectionId = over.data?.cardSectionId;
+
+  //   const oldIndex = cardArr.findIndex(card => card.id === active.id);
+  //   const newIndex = cardArr.findIndex(card => card.id === over.id);
+
+  //   console.log(active.id)
+  //   if (oldIndex !== -1 && newIndex !== -1) {
+  //     const updatedCards = [...cardArr];
+  //     const [movedCard] = updatedCards.splice(oldIndex, 1);
+  //     updatedCards.splice(newIndex, 0, movedCard)
+  //   }
+  // }
+
   return (
     <div className="board-container">
       <div className="board-header">
@@ -116,22 +135,28 @@ export default function BoardDetailPage() {
         }
       </div>
 
-      <div className="board-detail-main-card">
-        {cardSectionArr.length ?
-          cardSectionArr.map(cardSec => {
-            return <CardSection cardSec={cardSec} key={cardSec.id} />
-          })
-          :
-          <></>
-        }
+      <DndContext collisionDetection={closestCorners} 
+        // onDragEnd={handleDragEnd}
+      >
+        <SortableContext items={cardSectionArr.map(cs => cs.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          <div className="board-detail-main-card">
+            {cardSectionArr.length ?
+              cardSectionArr.map(cardSec => {
+                return <CardSection cardSec={cardSec} key={cardSec.id} />
+              })
+              :
+              <></>
+            }
 
-        <OpenModalButton
-          buttonText='Create a New Card Section'
-          modalComponent={<CreateCsModal boardId={currBoard.id} />}
-        />
-      </div>
-
-
+            <OpenModalButton
+              buttonText='Create a New Card Section'
+              modalComponent={<CreateCsModal boardId={currBoard.id} />}
+            />
+          </div>
+        </SortableContext>
+      </DndContext>
     </div>
   )
 }

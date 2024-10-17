@@ -10,6 +10,8 @@ import DeleteCardSectionModal from '../DeleteCardSectionModal'
 import Cards from '../Cards/Cards'
 import { closestCorners, DndContext } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 
 export default function CardSection({cardSec}) {
@@ -22,8 +24,19 @@ export default function CardSection({cardSec}) {
   const [cardName, setCardName] = useState('')
   const [cardErr, setCardErr] = useState({})
   const [isCreateCard, setIsCreateCard] = useState(false)
-
   const cardInputRef = useRef(null)
+
+  // const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+  //   id: cardSec.id,
+  //   data: {
+  //     cardSectionId: csId
+  //   }
+  // })
+
+  // const style = {
+  //   transition,
+  //   transform: CSS.Transform.toString(transform)
+  // }
 
   //! for add new card
   const handleAddCard = () => {
@@ -109,19 +122,18 @@ export default function CardSection({cardSec}) {
     const {active, over} = e;
     if(!over || active.id === over.id) return;
 
-    console.log(active.id, over.id);
-
     const oldIndex = cardArr.findIndex(card => card.id === active.id);
     const newIndex = cardArr.findIndex(card => card.id === over.id);
-    console.log(oldIndex, newIndex)
 
     if (oldIndex !== -1 && newIndex !== -1) {
 
       const updatedCards = [...cardArr];
-      console.log(cardArr)
       const [movedCard] = updatedCards.splice(oldIndex, 1);
       updatedCards.splice(newIndex, 0, movedCard);
-      console.log(updatedCards)
+      updatedCards.forEach(card => {
+        card.order = updatedCards.indexOf(card)
+      })
+      // console.log(updatedCards)
       dispatch(reorderCardThunk({reorderedCards: updatedCards}))
     }
   }
@@ -158,7 +170,8 @@ export default function CardSection({cardSec}) {
         onDragEnd={handleDragEnd}
       >
         <SortableContext items={cardArr.map(card => card.id)} strategy={verticalListSortingStrategy}>
-          <div className='card-section-cards'>
+          <div className='card-section-cards'
+          >
             {cardArr.map(card => (
               <Cards card={card} csId={csId} key={card.id} />
             ))}
