@@ -7,22 +7,23 @@ import { useSortable } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 
 export default function Cards({card, csId}) {
-  // console.log(card.id)
   const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
     id: card.id,
     data: {
-      cardSectionId: csId
+      cardSectionId: csId,
+      cardId: card.id
     }
   })
 
   const style = {
-    transition,
+    transition: transition ?? 'transform 300ms ease',
     transform: CSS.Transform.toString(transform)
   }
   return (
     <div className='card-section-card-row'
       ref={setNodeRef} 
       style={style}
+      onClick={(e) => e.stopPropagation()}
     >
       <p {...attributes} {...listeners}>{card.name}</p>
       <div className='card-section-card-row-icons'>

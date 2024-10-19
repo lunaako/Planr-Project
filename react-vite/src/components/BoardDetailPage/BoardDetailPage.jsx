@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import './BoardDetailPage.css';
 import LoginFormPage from "../LoginFormPage";
 import { getBoardsThunk, updateBoardThunk} from "../../redux/board";
+import { getCardsThunk, reorderCardThunk } from '../../redux/card'
 import { useParams } from "react-router-dom";
 import { getCardSectionsThunk } from "../../redux/cardSection";
 import CardSection from "../CardSection/CardSection";
@@ -11,9 +12,9 @@ import CreateCsModal from "../CreateCsModal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as regularFaStar} from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidFaStar } from '@fortawesome/free-solid-svg-icons';
-import { closestCorners, DndContext } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { closestCorners, DndContext, DragOverlay } from '@dnd-kit/core';
 import { addFavThunk, deleteFavThunk, getFavsThunk } from "../../redux/session";
+import Cards from '../Cards/Cards'
 
 
 export default function BoardDetailPage() {
@@ -31,8 +32,9 @@ export default function BoardDetailPage() {
   const [boardName, setBoardName] = useState(currBoard?.name || '');
   const [isStarred, setIsStarred] = useState(favedBoard !== undefined);
   const dispatch = useDispatch();
-  // const cards = useSelector(state => state.card)
-  // const cardArr = Object.values(cards)
+  const cards = useSelector(state => state.card);
+  const cardArr = Object.values(cards);
+  const [activeCard, setActiveCard] = useState(null);
 
   useEffect(() => {
     setIsStarred(favedBoard !== undefined)
@@ -92,21 +94,119 @@ export default function BoardDetailPage() {
   if (!user) return (<LoginFormPage />)
   if (!currBoard) return <> Oops, this board doesn't exist...</>
 
-  // const handleDragEnd = ({active, over}) => {
-  //   if (!over || active.id === over.id) return;
-  //   const oldSectionId = active.data?.cardSectionId;
-  //   const newSectionId = over.data?.cardSectionId;
+  const handleDragStart = (e) => {
+    const activeId = e.active.id;
+    const activeCard = cardArr.find(card => card.id === activeId);
+    setActiveCard(activeCard);
+  }
 
-  //   const oldIndex = cardArr.findIndex(card => card.id === active.id);
-  //   const newIndex = cardArr.findIndex(card => card.id === over.id);
+  // const handleDragOver = ({ active, over }) => {
+  //   if (!over) return;
 
-  //   console.log(active.id)
-  //   if (oldIndex !== -1 && newIndex !== -1) {
+  //   const activeId = active.id;
+  //   const overId = over.id;
+
+  //   const oldSectionId = active.data.current.cardSectionId;
+  //   const newSectionId = over.data.current.cardSectionId;
+
+  //   // If we're dragging over a new section
+  //   if (oldSectionId !== newSectionId) {
   //     const updatedCards = [...cardArr];
-  //     const [movedCard] = updatedCards.splice(oldIndex, 1);
-  //     updatedCards.splice(newIndex, 0, movedCard)
+
+  //     // Handle reordering within the target section (new section)
+  //     const targetCards = updatedCards.filter(card => card.cardSectionId === newSectionId);
+  //     const orderedTargetCards = targetCards.sort((a, b) => a.order - b.order);
+
+  //     // Find the index of the card currently being dragged and where it will be dropped
+  //     const newIndex = orderedTargetCards.findIndex(card => card.id === overId);
+
+  //     // Dynamically adjust the order within the new section
+  //     orderedTargetCards.splice(newIndex, 0, activeId);  // Insert the dragged card
+
+  //     // This will trigger the visual movement of the cards in the new section
+  //     // setCardArr(orderedTargetCards); // Update the list in state to trigger re-render
   //   }
-  // }
+  // };
+
+  const handleDragEnd = ({ active, over }) => {
+    setActiveCard(null);
+
+    if (!over || active.id === over.id) return;
+    console.log(active);
+    console.log(over);
+
+    const oldSectionId = active.data?.current.cardSectionId;
+    const newSectionId = over.data?.current.cardSectionId;
+
+    console.log(oldSectionId, newSectionId)
+
+    const oldIndex = cardArr.findIndex(card => card.id === active.id);
+    const newIndex = cardArr.findIndex(card => card.id === over.id);
+
+    if (oldIndex !== -1) {
+      const updatedCards = [...cardArr];
+
+      if (oldSectionId === newSectionId) {
+        console.log('Yes, it is within card section!')
+        const targetCards = updatedCards.filter(card => card.cardSectionId === oldSectionId)
+        const orderedTargetCards = targetCards.sort((a, b) => a.order - b.order)
+        const oldI = orderedTargetCards.findIndex(card => card.id === active.id)
+        const newI = orderedTargetCards.findIndex(card => card.id === over.id);
+        const [movingCard] = orderedTargetCards.splice(oldI, 1);
+        orderedTargetCards.splice(newI, 0, movingCard);
+        // console.log(orderedTargetCards);
+        for (let i = 0; i < orderedTargetCards.length; i++) {
+          orderedTargetCards[i].order = i;
+        }
+        dispatch(reorderCardThunk({ reorderedCards: orderedTargetCards }));
+        dispatch(getCardsThunk(newSectionId))
+
+      } else {
+        console.log('Move across different card section!')
+        const oldCards = updatedCards.filter(card => card.cardSectionId === oldSectionId);
+        const orderedOldCards = oldCards.sort((a, b) => a.order - b.order);
+        const oldI = orderedOldCards.findIndex(card => card.id === active.id);
+        const [movingCard] = orderedOldCards.splice(oldI, 1);
+        for (let i = 0; i < orderedOldCards.length; i++) {
+          orderedOldCards[i].order = i;
+        }
+
+        console.log('This is ordered old cards array')
+        console.log(orderedOldCards)
+
+        //?-----------till now the old cards's orders have been updated
+        const targetCards = updatedCards.filter(card => card.cardSectionId === newSectionId);
+
+        const orderedTargetCards = targetCards.sort((a, b) => a.order - b.order);
+        const newI = orderedTargetCards.findIndex(card => card.id === over?.id);
+
+        console.log(`This is the new Index ${newI}`)
+
+        movingCard.cardSectionId = newSectionId;
+
+        console.log('This is moving card info')
+        console.log(movingCard)
+
+        if(newI === orderedTargetCards.length - 1 || newI === -1) {
+          orderedTargetCards.push(movingCard);
+        } else {
+          orderedTargetCards.splice(newI, 0, movingCard);
+        }
+
+        for (let i = 0; i < orderedTargetCards.length; i++) {
+          orderedTargetCards[i].order = i;
+        }
+
+        console.log('This is final updated cards info')
+        console.log(orderedTargetCards)
+
+        const finalUpdatedCards = [...orderedOldCards, ...orderedTargetCards];
+        dispatch(reorderCardThunk({ reorderedCards: finalUpdatedCards }));
+        dispatch(getCardsThunk(oldSectionId))
+        dispatch(getCardsThunk(newSectionId))
+      }
+    }
+  }
 
   return (
     <div className="board-container">
@@ -136,26 +236,31 @@ export default function BoardDetailPage() {
       </div>
 
       <DndContext collisionDetection={closestCorners} 
-        // onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
+        // onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
       >
-        <SortableContext items={cardSectionArr.map(cs => cs.id)}
-          strategy={verticalListSortingStrategy}
-        >
-          <div className="board-detail-main-card">
-            {cardSectionArr.length ?
-              cardSectionArr.map(cardSec => {
-                return <CardSection cardSec={cardSec} key={cardSec.id} />
-              })
-              :
-              <></>
-            }
+        <div className="board-detail-main-card">
+          {cardSectionArr.length ?
+            cardSectionArr.map(cardSec => {
+              return <CardSection cardSec={cardSec} key={cardSec.id} />
+            })
+            :
+            <></>
+          }
 
-            <OpenModalButton
-              buttonText='Create a New Card Section'
-              modalComponent={<CreateCsModal boardId={currBoard.id} />}
-            />
-          </div>
-        </SortableContext>
+          <OpenModalButton
+            buttonText='Create a New Card Section'
+            modalComponent={<CreateCsModal boardId={currBoard.id} />}
+          />
+        </div>
+
+        <DragOverlay>
+          {activeCard ? (
+            <Cards card={activeCard} />
+          ) : null}
+        </DragOverlay>
+
       </DndContext>
     </div>
   )

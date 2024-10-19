@@ -8,11 +8,8 @@ import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import OpenModalButton from '../OpenModalButton';
 import DeleteCardSectionModal from '../DeleteCardSectionModal'
 import Cards from '../Cards/Cards'
-import { closestCorners, DndContext } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-
+import { DragOverlay, useDroppable } from '@dnd-kit/core';
 
 export default function CardSection({cardSec}) {
   const dispatch = useDispatch()
@@ -26,17 +23,10 @@ export default function CardSection({cardSec}) {
   const [isCreateCard, setIsCreateCard] = useState(false)
   const cardInputRef = useRef(null)
 
-  // const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-  //   id: cardSec.id,
-  //   data: {
-  //     cardSectionId: csId
-  //   }
-  // })
-
-  // const style = {
-  //   transition,
-  //   transform: CSS.Transform.toString(transform)
-  // }
+  const { isOver, setNodeRef } = useDroppable({
+    id: `droppab;e-${csId}`,
+    data: {cardSectionId: csId}
+  })
 
   //! for add new card
   const handleAddCard = () => {
@@ -118,27 +108,7 @@ export default function CardSection({cardSec}) {
 
   if (!cardSec) return <>Loading</>
 
-  const handleDragEnd = (e) => {
-    const {active, over} = e;
-    if(!over || active.id === over.id) return;
-
-    const oldIndex = cardArr.findIndex(card => card.id === active.id);
-    const newIndex = cardArr.findIndex(card => card.id === over.id);
-
-    if (oldIndex !== -1 && newIndex !== -1) {
-
-      const updatedCards = [...cardArr];
-      const [movedCard] = updatedCards.splice(oldIndex, 1);
-      updatedCards.splice(newIndex, 0, movedCard);
-      updatedCards.forEach(card => {
-        card.order = updatedCards.indexOf(card)
-      })
-      // console.log(updatedCards)
-      dispatch(reorderCardThunk({reorderedCards: updatedCards}))
-    }
-  }
-  console.log(cardArr)
-
+  // console.log(cardArr)
 
   return (
     <div className='card-section-container'>
@@ -166,15 +136,25 @@ export default function CardSection({cardSec}) {
 
       </div>
 
-      <DndContext collisionDetection={closestCorners}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext items={cardArr.map(card => card.id)} strategy={verticalListSortingStrategy}>
+        <SortableContext items={cardArr.map(card => card.id)} 
+          strategy={verticalListSortingStrategy}
+        >
           <div className='card-section-cards'
+            ref={setNodeRef}
+            style={{ backgroundColor: isOver ? '#f0f0f0' : 'transparent' }}
           >
-            {cardArr.map(card => (
+            {/* {cardArr.map(card => (
               <Cards card={card} csId={csId} key={card.id} />
-            ))}
+            ))} */}
+            {cardArr.length > 0 ? (
+              cardArr.map(card => (
+                <Cards card={card} csId={csId} key={card.id} />
+              ))
+            ) : (
+              // This div acts as a droppable area when the section is empty
+              <div className="empty-card-section">
+              </div>
+            )}
 
             {isCreateCard ?
               (
@@ -212,9 +192,6 @@ export default function CardSection({cardSec}) {
             }
           </div>
         </SortableContext>
-        
-      </DndContext>
-      
 
     </div>
   )
