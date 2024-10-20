@@ -30,5 +30,5 @@ class CardSection(db.Model):
   def to_dict_card(self):
      return {
         **self.to_dict_basic(),
-        "Cards": [card.to_dict_basic() for card in self.cards]
+        "Cards": [card.to_dict_basic() for card in sorted(self.cards, key=lambda c: c.order)]
      }
