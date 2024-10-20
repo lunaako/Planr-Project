@@ -3,6 +3,8 @@ const CREATE_CARD = 'card/create';
 const UPDATE_CARD = 'card/update';
 const DELETE_CARD = 'card/delete';
 const REORDER_CARD = 'card/reorder';
+const ON_DRAG_CARD = 'card/onDragCard';
+
 
 const getCards = (payload) => {
   return {
@@ -35,6 +37,13 @@ const deleteCard = (payload) => {
 const reorderCard = (payload) => {
   return {
     type: REORDER_CARD,
+    payload
+  }
+}
+
+const onDragCard = (payload) => {
+  return {
+    type: ON_DRAG_CARD,
     payload
   }
 }
@@ -113,6 +122,11 @@ export const reorderCardThunk = (reorderCards) => async(dispatch) => {
   }
 }
 
+export const onDragCardThunk = (moveCardProps) => async (dispatch) => {
+  dispatch(onDragCard(moveCardProps));
+  return;
+}
+
 
 function cardReducer(state={}, action) {
   switch(action.type) {
@@ -154,7 +168,17 @@ function cardReducer(state={}, action) {
       reorderedCards.forEach(card => {
         newState[card.id].cardSectionId = card.cardSectionId
         newState[card.id].order = card.order
+        newState[card.id].floating = null;
       })
+      return newState;
+    }
+
+    case ON_DRAG_CARD: {
+      const newState = {...state};
+      const moveCardProps = action.payload;
+      console.log(moveCardProps);
+      newState[moveCardProps.id].cardSectionId = moveCardProps.tempCardSectionId;
+      newState[moveCardProps.id].floating = true;
       return newState;
     }
 

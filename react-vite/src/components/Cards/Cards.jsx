@@ -10,7 +10,7 @@ export default function Cards({card, csId}) {
   const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
     id: card.id,
     data: {
-      cardSectionId: csId,
+      cardSectionId: card.cardSectionId,
       cardId: card.id
     }
   })
@@ -20,7 +20,7 @@ export default function Cards({card, csId}) {
     transform: CSS.Transform.toString(transform)
   }
   return (
-    <div className='card-section-card-row'
+    <div className={`card-section-card-row ${card.floating !== null && card.floating ? 'card-section-card-row-dragging' : ''}`}
       ref={setNodeRef} 
       style={style}
       onClick={(e) => e.stopPropagation()}

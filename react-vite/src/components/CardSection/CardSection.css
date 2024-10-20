@@ -53,6 +53,21 @@
   margin-bottom: 1rem;
 }
 
+.card-section-card-row-dragging {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border:2px dotted #ccc;
+  background-color: #f1f2f4;
+  color: black;
+  padding-left: 4px;
+  margin-bottom: 1rem;
+}
+
+.card-section-card-row-dragging button {
+  background-color: transparent;
+}
+
 .card-section-container button{
   border: none;
   background-color: transparent;

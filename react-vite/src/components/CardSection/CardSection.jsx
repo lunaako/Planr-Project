@@ -143,9 +143,6 @@ export default function CardSection({cardSec}) {
             ref={setNodeRef}
             style={{ backgroundColor: isOver ? '#f0f0f0' : 'transparent' }}
           >
-            {/* {cardArr.map(card => (
-              <Cards card={card} csId={csId} key={card.id} />
-            ))} */}
             {cardArr.length > 0 ? (
               cardArr.map(card => (
                 <Cards card={card} csId={csId} key={card.id} />

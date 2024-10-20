@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import './BoardDetailPage.css';
 import LoginFormPage from "../LoginFormPage";
 import { getBoardsThunk, updateBoardThunk} from "../../redux/board";
-import { getCardsThunk, reorderCardThunk } from '../../redux/card'
+import { getCardsThunk, reorderCardThunk, onDragCardThunk } from '../../redux/card'
 import { useParams } from "react-router-dom";
 import { getCardSectionsThunk } from "../../redux/cardSection";
 import CardSection from "../CardSection/CardSection";
@@ -100,11 +100,24 @@ export default function BoardDetailPage() {
     setActiveCard(activeCard);
   }
 
+  const handleDragOver = (e) => {
+    if (!e.over) return;
+    const activeId = e.active.id;
+
+    const overCardSectionId = e.over.data.current.cardSectionId;
+
+    const moveCardProps = {
+      tempCardSectionId: overCardSectionId,
+      id: activeId
+    }
+    dispatch(onDragCardThunk(moveCardProps));
+  }
+
   // const handleDragOver = ({ active, over }) => {
   //   if (!over) return;
 
   //   const activeId = active.id;
-  //   const overId = over.id;
+  //   1234const overId = over.id;
 
   //   const oldSectionId = active.data.current.cardSectionId;
   //   const newSectionId = over.data.current.cardSectionId;
@@ -129,11 +142,10 @@ export default function BoardDetailPage() {
   // };
 
   const handleDragEnd = ({ active, over }) => {
+    console.log("drag end!!!!!!");
     setActiveCard(null);
 
-    if (!over || active.id === over.id) return;
-    console.log(active);
-    console.log(over);
+    if (!over) return;
 
     const oldSectionId = active.data?.current.cardSectionId;
     const newSectionId = over.data?.current.cardSectionId;
@@ -237,7 +249,7 @@ export default function BoardDetailPage() {
 
       <DndContext collisionDetection={closestCorners} 
         onDragStart={handleDragStart}
-        // onDragOver={handleDragOver}
+        onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
         <div className="board-detail-main-card">
