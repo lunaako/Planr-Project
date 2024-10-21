@@ -19,7 +19,8 @@ export default function UpdateCardModal({card}) {
   const [originalDescription, setOriginalDescription] = useState(card?.description || '');
   const [labels, setLabels] = useState(card?.labels || '')
   const [dueDate, setDueDate] = useState(card?.dueDate ? new Date(card.dueDate) : null)
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
+  const [nameErr, setNameErr] = useState({});
   const cards = useSelector(state => state.card)
   const updatedCard = Object.values(cards).find(c => c.id === card.id)
 
@@ -54,19 +55,28 @@ export default function UpdateCardModal({card}) {
   }
 
   const handleInputChange = (e) => {
+    const newVal = e.target.value;
+    if (newVal.length > 50) {
+      setNameErr({cardName: 'Card name should be within 50 characters' });
+      return;
+    }
     setName(e.target.value)
+    setNameErr({});
   }
 
   const handleInputBlur = () => {
-    handleCardNameUpdate()
+    if(name.length <= 50) {
+      handleCardNameUpdate();
+    }
   }
 
   const handleInputKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && name.length <= 50) {
       handleCardNameUpdate();
     } else if (e.key === 'Escape') {
       setName(card.name)
       setIsEditing(false)
+      setNameErr({});
     }
   }
 
@@ -134,7 +144,10 @@ export default function UpdateCardModal({card}) {
           </h3>
           )
         }
+
       </div>
+
+      {nameErr.cardName && <p className="update-card-name">* {nameErr.cardName}</p>}
 
       <div className="update-card-des">
         <div className="update-des-title">

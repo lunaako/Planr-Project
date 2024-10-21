@@ -1,5 +1,6 @@
 .update-card-modal {
-  width: 500px;
+  min-width: 500px;
+  width: fit-content;
 }
 
 .update-card-title {
@@ -139,6 +140,11 @@
 
 #label-red {
   background-color: #FF3131;
+}
+
+.update-card-name {
+  color: red;
+  margin-bottom: 0px;
 }
 
 
