@@ -11,4 +11,5 @@ class Config:
     # so the connection uri must be updated here (for production)
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL').replace('postgres://', 'postgresql://')
+    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
     SQLALCHEMY_ECHO = True

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { createCardThunk, getCardsThunk, reorderCardThunk } from '../../redux/card'
+import { createCardThunk, getCardsThunk } from '../../redux/card'
 import './CardSection.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCardSectionThunk } from '../../redux/cardSection'
@@ -9,7 +9,7 @@ import OpenModalButton from '../OpenModalButton';
 import DeleteCardSectionModal from '../DeleteCardSectionModal'
 import Cards from '../Cards/Cards'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { DragOverlay, useDroppable } from '@dnd-kit/core';
+import { useDroppable } from '@dnd-kit/core';
 
 export default function CardSection({cardSec}) {
   const dispatch = useDispatch()
