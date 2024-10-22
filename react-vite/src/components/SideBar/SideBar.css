@@ -115,6 +115,8 @@
 
 .side-bar-board-name {
   cursor: pointer;
+  max-width: 10rem;
+  word-wrap: break-word;
 }
 
 .side-bar-board-item:hover {
