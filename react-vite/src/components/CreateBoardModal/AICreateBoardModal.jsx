@@ -80,7 +80,7 @@ export default function AICreateBoardModal({ boardId }) {
 
       <form>
         <label className="breate-board-ai-label">
-          Enter your descriptions below:
+          Tell me the general idea about you plan:
           <textarea
             type='text'
             value={description}
