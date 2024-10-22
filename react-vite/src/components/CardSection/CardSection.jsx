@@ -108,8 +108,6 @@ export default function CardSection({cardSec}) {
 
   if (!cardSec) return <>Loading</>
 
-  // console.log(cardArr)
-
   return (
     <div className='card-section-container'>
       <div className='card-section-title'>
