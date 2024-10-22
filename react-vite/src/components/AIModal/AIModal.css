@@ -18,6 +18,10 @@
   border: none;
 }
 
+.no-button-ai-tips {
+  min-width: 6rem;
+}
+
 .ai-tips-res {
   background-color: white;
   color: black;

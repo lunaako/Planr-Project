@@ -123,4 +123,13 @@
   background-color: #838CA0;
 }
 
+#side-bar-ai-icon {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+#side-bar-ai-icon:hover {
+  transform: rotate(90deg) scale(1.2);
+  color: #FFD700;
+}
+
 

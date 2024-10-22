@@ -71,6 +71,12 @@
 #ai-tip-icon {
   color: white;
   font-size: 0.9rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+#ai-tip-icon:hover {
+  transform: rotate(90deg) scale(1.2);
+  color: #FFD700;
 }
 
 .board-header button {

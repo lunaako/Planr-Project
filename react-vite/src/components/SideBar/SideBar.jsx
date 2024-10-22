@@ -77,7 +77,7 @@ export default function SideBar() {
           />
 
           <OpenModalButton
-              buttonText={<FontAwesomeIcon icon={faWandMagicSparkles} />}
+              buttonText={<FontAwesomeIcon icon={faWandMagicSparkles} id='side-bar-ai-icon' />}
             modalComponent={<AICreateBoardModal />}
           />
         </div>
