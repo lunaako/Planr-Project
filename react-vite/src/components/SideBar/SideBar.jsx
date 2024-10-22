@@ -9,7 +9,7 @@ import DeleteBoardModal from '../DeleteBoardModal/DeleteBoardModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoardsThunk, getBoardThunk } from '../../redux/board';
 import CreateBoardModal from '../CreateBoardModal/CreateBoardModal';
-import AICreateBoardModal from '../CreateBoardModal/AICreateBoardModel';
+import AICreateBoardModal from '../CreateBoardModal/AICreateBoardModal';
 import aiButton from '/aiButton.png'
 
 

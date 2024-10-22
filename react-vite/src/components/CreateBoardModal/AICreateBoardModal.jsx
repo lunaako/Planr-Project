@@ -1,9 +1,8 @@
 import { marked } from "marked";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import { useModal } from '../../context/Modal';
-
-
+import './AICreateBoardModal.css';
 
 export default function AICreateBoardModal({ boardId }) {
   const [description, setDescription] = useState('');
@@ -22,9 +21,7 @@ export default function AICreateBoardModal({ boardId }) {
       headers: { 'Content-Type': 'application/json' }
     })
     if (res.ok) {
-      // console.log(res);
       const data = await res.json();
-      console.log(data)
       setSuggestion(data.answer);
       return data;
     } else {
@@ -44,11 +41,9 @@ export default function AICreateBoardModal({ boardId }) {
       headers: { 'Content-Type': 'application/json' }
     })
     if (res.ok) {
-      // console.log(res);
-      const data = await res.json();
-      console.log(data)
-      
-      navigate(`/boards/${data.board_id}`).then(closeModal);
+      const data = await res.json(); 
+      closeModal();     
+      navigate(`/boards/${data.board_id}`);
       return data;
     } else {
       const err = await res.json();
@@ -58,10 +53,10 @@ export default function AICreateBoardModal({ boardId }) {
 
 
   return (
-    <div>
+    <div className="create-board-ai-self">
       <form>
-        <label>
-          Request Description
+        <label className="breate-board-ai-label">
+          Enter your descriptions below:
           <textarea
             type='text'
             value={description}
@@ -71,21 +66,28 @@ export default function AICreateBoardModal({ boardId }) {
         </label>
       </form>
 
-      {suggestion.length > 0 ? <div><h4>Here are some tips you can use as your tasks</h4>
-      <div dangerouslySetInnerHTML={{ __html: marked.parse(suggestion) }}>
-      </div></div> : <div></div>}
+      {suggestion.length > 0 ? 
+        <div className="create-board-ai-res">
+          <h4>Here are some tips you can use as your tasks</h4>
+          <div dangerouslySetInnerHTML={{ __html: marked.parse(suggestion) }}></div>
+        </div> 
+        : 
+        <div></div>}
       
-      <button
-        onClick={handleSuggestionClick}
-      >
-        Get Suggestion
-      </button>
+      <div className="create-board-ai-buttons">
+        <button
+          onClick={handleSuggestionClick}
+        >
+          {suggestion ? 'Regenerate Suggestion' : 'Get Suggestion'}
+        </button>
 
-      {suggestion.length > 0 ? <button
-        onClick={handleCreationClick}
-      >
-        Create Board
-      </button> : <div></div>}
+        {suggestion.length > 0 ? <button
+          onClick={handleCreationClick}
+        >
+          Create Board
+        </button> : <div></div>}
+      </div>
+      
     </div>
   )
 }

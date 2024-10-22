@@ -1,0 +1,29 @@
+.create-board-ai-self {
+  padding: 20px;
+  max-height: 30rem;
+  min-width: 24rem;
+  max-width: 30rem;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.breate-board-ai-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: start;
+}
+
+.create-board-ai-self form {
+  margin-bottom: 1rem;
+}
+
+.create-board-ai-res h4 {
+  text-align: start;
+}
+
+.create-board-ai-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+}
