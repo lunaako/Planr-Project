@@ -11,7 +11,7 @@ def call_gpt(content):
   completion = client.chat.completions.create(
       model="gpt-4o-mini",
       messages=[
-          {"role": "system", "content": "You are an expert task planner and productivity consultant. Your job is to help users optimize their workflows and organize tasks efficiently. You are an assistant to help me generate answer for the clients who is using my website, so you will be ready to respond with natural language answers or fixed json schema based on my need"},
+          {"role": "system", "content": "You are an expert task planner and productivity consultant. Your job is to help users optimize their workflows and organize tasks efficiently. You are an assistant to help me generate answer for the clients who is using my website, so you will be ready to respond with natural language answers based on my need"},
           {
               "role": "user",
               "content": content

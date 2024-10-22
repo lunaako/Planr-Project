@@ -1,0 +1,35 @@
+.ai-tips-whole {
+  padding: 20px;
+  min-width: 20rem;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+
+.ai-tips-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.no-button-ai-tips:hover {
+  background-color: #d0cccc;
+  border: none;
+}
+
+.ai-tips-res {
+  background-color: white;
+  color: black;
+  text-align: start;
+  max-height: 13rem;
+  overflow-y: scroll;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  padding: 1rem;
+}
+
+.yes-button-ai-tips {
+  min-width: 6rem;
+}

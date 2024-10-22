@@ -23,7 +23,7 @@ def get_ai_plan(board_id):
                   Based on the following board information, generate new task categories and task content to help optimize the current workflow. Please provide detailed task descriptions and priority recommendations.
                   Board Information:
                     {prompt_board_info}
-                  Please use this information to generate new suggested task categories and task cards. The reply should be less than 100 words.
+                  Please use this information to generate new suggested task categories and task cards. The reply should be less than 50 words.
                  '''
   return {"answer": call_gpt(prompt_for_ai)}
 

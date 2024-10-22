@@ -7,7 +7,6 @@ import aiGif from '/aiGif.gif';
 import loadingGif from '/loading.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
-// import { ThreeDots } from 'react-loader-spinner'
 
 
 export default function AICreateBoardModal({ boardId }) {
@@ -71,11 +70,11 @@ export default function AICreateBoardModal({ boardId }) {
 
         <div className="chat-bubble-whole">
           <FontAwesomeIcon icon={faCaretLeft} className="arrow-bubble"/>
+          
           <div className="chat-bubble">
             <p>Do you want AI's help?</p>
           </div> 
         </div>
-        
       </div>
 
       <form>
