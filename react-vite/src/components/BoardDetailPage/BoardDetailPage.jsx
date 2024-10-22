@@ -15,6 +15,7 @@ import { faStar as solidFaStar } from '@fortawesome/free-solid-svg-icons';
 import { closestCorners, DndContext, DragOverlay } from '@dnd-kit/core';
 import { addFavThunk, deleteFavThunk, getFavsThunk } from "../../redux/session";
 import Cards from '../Cards/Cards'
+import AIModal from "../AIModal/AIModal";
 
 
 export default function BoardDetailPage() {
@@ -113,34 +114,6 @@ export default function BoardDetailPage() {
     dispatch(onDragCardThunk(moveCardProps));
   }
 
-  // const handleDragOver = ({ active, over }) => {
-  //   if (!over) return;
-
-  //   const activeId = active.id;
-  //   1234const overId = over.id;
-
-  //   const oldSectionId = active.data.current.cardSectionId;
-  //   const newSectionId = over.data.current.cardSectionId;
-
-  //   // If we're dragging over a new section
-  //   if (oldSectionId !== newSectionId) {
-  //     const updatedCards = [...cardArr];
-
-  //     // Handle reordering within the target section (new section)
-  //     const targetCards = updatedCards.filter(card => card.cardSectionId === newSectionId);
-  //     const orderedTargetCards = targetCards.sort((a, b) => a.order - b.order);
-
-  //     // Find the index of the card currently being dragged and where it will be dropped
-  //     const newIndex = orderedTargetCards.findIndex(card => card.id === overId);
-
-  //     // Dynamically adjust the order within the new section
-  //     orderedTargetCards.splice(newIndex, 0, activeId);  // Insert the dragged card
-
-  //     // This will trigger the visual movement of the cards in the new section
-  //     // setCardArr(orderedTargetCards); // Update the list in state to trigger re-render
-  //   }
-  // };
-
   const handleDragEnd = ({ active, over }) => {
     console.log("drag end!!!!!!");
     setActiveCard(null);
@@ -159,7 +132,6 @@ export default function BoardDetailPage() {
       const updatedCards = [...cardArr];
 
       if (oldSectionId === newSectionId) {
-        console.log('Yes, it is within card section!')
         const targetCards = updatedCards.filter(card => card.cardSectionId === oldSectionId)
         const orderedTargetCards = targetCards.sort((a, b) => a.order - b.order)
         const oldI = orderedTargetCards.findIndex(card => card.id === active.id)
@@ -174,7 +146,6 @@ export default function BoardDetailPage() {
         dispatch(getCardsThunk(newSectionId))
 
       } else {
-        console.log('Move across different card section!')
         const oldCards = updatedCards.filter(card => card.cardSectionId === oldSectionId);
         const orderedOldCards = oldCards.sort((a, b) => a.order - b.order);
         const oldI = orderedOldCards.findIndex(card => card.id === active.id);
@@ -183,21 +154,13 @@ export default function BoardDetailPage() {
           orderedOldCards[i].order = i;
         }
 
-        console.log('This is ordered old cards array')
-        console.log(orderedOldCards)
-
         //?-----------till now the old cards's orders have been updated
         const targetCards = updatedCards.filter(card => card.cardSectionId === newSectionId);
 
         const orderedTargetCards = targetCards.sort((a, b) => a.order - b.order);
         const newI = orderedTargetCards.findIndex(card => card.id === over?.id);
 
-        console.log(`This is the new Index ${newI}`)
-
         movingCard.cardSectionId = newSectionId;
-
-        console.log('This is moving card info')
-        console.log(movingCard)
 
         if(newI === orderedTargetCards.length - 1 || newI === -1) {
           orderedTargetCards.push(movingCard);
@@ -208,9 +171,6 @@ export default function BoardDetailPage() {
         for (let i = 0; i < orderedTargetCards.length; i++) {
           orderedTargetCards[i].order = i;
         }
-
-        console.log('This is final updated cards info')
-        console.log(orderedTargetCards)
 
         const finalUpdatedCards = [...orderedOldCards, ...orderedTargetCards];
         dispatch(reorderCardThunk({ reorderedCards: finalUpdatedCards }));
@@ -245,6 +205,11 @@ export default function BoardDetailPage() {
             <FontAwesomeIcon icon={regularFaStar} className="board-title-star" onClick={handleStar} />
           )
         }
+
+        <OpenModalButton
+          buttonText='AI Tips'
+          modalComponent={<AIModal boardId={currBoard.id} />}
+        />
       </div>
 
       <DndContext collisionDetection={closestCorners} 
@@ -274,6 +239,7 @@ export default function BoardDetailPage() {
         </DragOverlay>
 
       </DndContext>
+
     </div>
   )
 }

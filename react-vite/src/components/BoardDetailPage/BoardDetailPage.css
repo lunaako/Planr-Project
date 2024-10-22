@@ -37,7 +37,7 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   align-items: flex-start;
-  height: 100vh;
+  height: 80vh;
   gap: 2%;
   margin-left: 1%;
 }
