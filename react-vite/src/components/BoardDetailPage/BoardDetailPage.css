@@ -81,8 +81,12 @@
 
 .board-header button {
   background-color: transparent;
-  margin-top: 4px;
+  margin-top: 5px;
   padding: 0;
+}
+
+#board-name-ai-tooltip {
+  width: 6rem;
 }
 
 

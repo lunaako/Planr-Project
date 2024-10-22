@@ -132,4 +132,30 @@
   color: #FFD700;
 }
 
+.ai-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltips {
+  visibility: hidden;
+  width: 8rem;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 0.2rem;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  background-color: rgba(131, 140, 160, 0.3);
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.75rem;
+}
+
+.ai-icon-container:hover .tooltips {
+  visibility: visible;
+  opacity: 1;
+}
 

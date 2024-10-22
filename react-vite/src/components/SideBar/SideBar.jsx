@@ -76,10 +76,14 @@ export default function SideBar() {
             modalComponent={<CreateBoardModal />}
           />
 
-          <OpenModalButton
+          <div className='ai-icon-container'>
+            <OpenModalButton
               buttonText={<FontAwesomeIcon icon={faWandMagicSparkles} id='side-bar-ai-icon' />}
-            modalComponent={<AICreateBoardModal />}
-          />
+              modalComponent={<AICreateBoardModal />}
+            />
+            <span className='tooltips'>Use AI to create boards</span>
+          </div>
+
         </div>
         
       </div>

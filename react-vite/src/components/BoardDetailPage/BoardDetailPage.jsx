@@ -204,10 +204,14 @@ export default function BoardDetailPage() {
           )
         }
 
-        <OpenModalButton
-          buttonText={<FontAwesomeIcon icon={faWandMagicSparkles} id="ai-tip-icon"/>}
-          modalComponent={<AIModal boardId={currBoard.id} />}
-        />
+        <div className="ai-icon-container">
+          <OpenModalButton
+            buttonText={<FontAwesomeIcon icon={faWandMagicSparkles} id="ai-tip-icon" />}
+            modalComponent={<AIModal boardId={currBoard.id} />}
+          />
+          <span className='tooltips' id="board-name-ai-tooltip">Ask AI for advice</span>
+        </div>
+       
       </div>
 
       <DndContext collisionDetection={closestCorners} 
