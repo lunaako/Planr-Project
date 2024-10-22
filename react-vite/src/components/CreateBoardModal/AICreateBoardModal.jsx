@@ -3,15 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useModal } from '../../context/Modal';
 import './AICreateBoardModal.css';
+import aiGif from '/aiGif.gif';
+import loadingGif from '/loading.gif';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+// import { ThreeDots } from 'react-loader-spinner'
+
 
 export default function AICreateBoardModal({ boardId }) {
   const [description, setDescription] = useState('');
   const [suggestion, setSuggestion] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { closeModal } = useModal();
 
 
   const handleSuggestionClick = async () => {
+    setIsLoading(true);
+
     const body = {
       description: description
     }
@@ -23,6 +32,7 @@ export default function AICreateBoardModal({ boardId }) {
     if (res.ok) {
       const data = await res.json();
       setSuggestion(data.answer);
+      setIsLoading(false);
       return data;
     } else {
       const err = await res.json();
@@ -31,6 +41,7 @@ export default function AICreateBoardModal({ boardId }) {
   }
 
   const handleCreationClick = async () => {
+    setIsLoading(true);
     const body = {
       description: description,
       suggestion: suggestion
@@ -42,6 +53,7 @@ export default function AICreateBoardModal({ boardId }) {
     })
     if (res.ok) {
       const data = await res.json(); 
+      setIsLoading(false);
       closeModal();     
       navigate(`/boards/${data.board_id}`);
       return data;
@@ -54,38 +66,59 @@ export default function AICreateBoardModal({ boardId }) {
 
   return (
     <div className="create-board-ai-self">
+      <div className="create-board-ai-gif">
+        <img src={aiGif} />
+
+        <div className="chat-bubble-whole">
+          <FontAwesomeIcon icon={faCaretLeft} className="arrow-bubble"/>
+          <div className="chat-bubble">
+            <p>Do you want AI's help?</p>
+          </div> 
+        </div>
+        
+      </div>
+
       <form>
         <label className="breate-board-ai-label">
           Enter your descriptions below:
           <textarea
             type='text'
             value={description}
+            placeholder="Example: I wanna make a 2-days plan for keeping fit. I don't like Cardio!"
             onChange={(e) => setDescription(e.target.value)}
             required
           />
         </label>
       </form>
 
+
       {suggestion.length > 0 ? 
         <div className="create-board-ai-res">
-          <h4>Here are some tips you can use as your tasks</h4>
-          <div dangerouslySetInnerHTML={{ __html: marked.parse(suggestion) }}></div>
+          <h4>Here is your plan: </h4>
+          <div dangerouslySetInnerHTML={{ __html: marked.parse(suggestion) }}
+            className="create-board-plan-body"
+          ></div>
         </div> 
         : 
         <div></div>}
       
+      {isLoading && <img src={loadingGif} alt='loading' className="loading-gif"/>}
+      
       <div className="create-board-ai-buttons">
         <button
           onClick={handleSuggestionClick}
+          className="buttons-wiz-hover"
         >
-          {suggestion ? 'Regenerate Suggestion' : 'Get Suggestion'}
+          {suggestion ? 'Regenerate' : 'Generate Your Plan'}
         </button>
 
-        {suggestion.length > 0 ? <button
+        {suggestion ? 
+        <button
           onClick={handleCreationClick}
+          className="buttons-wiz-hover"
         >
           Create Board
-        </button> : <div></div>}
+        </button> : ""}
       </div>
       
     </div>

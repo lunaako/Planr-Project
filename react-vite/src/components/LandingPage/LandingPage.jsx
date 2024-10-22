@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
 import cardSecImg from '/cardSectionCover.jpg';
 import { useNavigate } from "react-router-dom";
-import { addFavThunk, deleteFavThunk, getFavsThunk } from "../../redux/session";
+import { getFavsThunk } from "../../redux/session";
 
 
 export default function LandingPage() {

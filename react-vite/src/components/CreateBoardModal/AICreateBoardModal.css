@@ -1,11 +1,55 @@
 .create-board-ai-self {
   padding: 20px;
-  max-height: 30rem;
-  min-width: 24rem;
-  max-width: 30rem;
-  overflow-y: auto;
+  height: auto;
+  width: 33rem;
   text-align: center;
 }
+
+.create-board-ai-self textarea {
+  border-radius: 5px;
+}
+
+.create-board-ai-gif {
+  text-align: start;
+  display: flex;
+  align-items: center;
+}
+
+.create-board-ai-gif img {
+  width: 20%;
+}
+
+.chat-bubble {
+  max-width: 250px;
+  padding: 10px 15px;
+  margin: 10px;
+  border-radius: 20px;
+  line-height: 1.5;
+  display: inline-block;
+  word-wrap: break-word;
+  background-color: white;
+  color: black;
+  align-self: flex-start;
+}
+
+.chat-bubble-whole {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.arrow-bubble {
+  font-size: 2rem;
+  position: absolute;
+  left: 5px;
+  top: 20px;
+  color: white;
+}
+
+.chat-bubble p {
+  margin: 3px;
+}
+
 
 .breate-board-ai-label {
   display: flex;
@@ -26,4 +70,21 @@
   display: flex;
   justify-content: center;
   gap: 5rem;
+}
+
+.create-board-plan-body {
+  background-color: white;
+  color: black;
+  text-align: start;
+  max-height: 13rem;
+  overflow-y: scroll;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  padding: 1rem;
+}
+
+.loading-gif {
+  width: 40px;
+  height: 30%;
 }
