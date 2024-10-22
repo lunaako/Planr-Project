@@ -1,7 +1,7 @@
 import './SideBar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import OpenModalButton from '../OpenModalButton';
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBoardsThunk, getBoardThunk } from '../../redux/board';
 import CreateBoardModal from '../CreateBoardModal/CreateBoardModal';
 import AICreateBoardModal from '../CreateBoardModal/AICreateBoardModel';
+import aiButton from '/aiButton.png'
 
 
 export default function SideBar() {
@@ -69,14 +70,19 @@ export default function SideBar() {
         <h3>
             {user.username}&apos;s Boards
         </h3>
-        <OpenModalButton
-          buttonText={<FontAwesomeIcon icon={faPlus} />}
-          modalComponent={<CreateBoardModal />}
-        />
-        <OpenModalButton
-          buttonText={<FontAwesomeIcon icon={faPlus} />}
-          modalComponent={<AICreateBoardModal />}
-        />
+
+        <div className='sidebar-add-boards'>
+          <OpenModalButton
+            buttonText={<FontAwesomeIcon icon={faPlus} />}
+            modalComponent={<CreateBoardModal />}
+          />
+
+          <OpenModalButton
+              buttonText={<FontAwesomeIcon icon={faWandMagicSparkles} />}
+            modalComponent={<AICreateBoardModal />}
+          />
+        </div>
+        
       </div>
 
       <ul className='side-bar-board-lists'>

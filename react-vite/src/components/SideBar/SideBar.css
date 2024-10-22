@@ -32,6 +32,11 @@
   background-color: #838CA0;
 }
 
+.sidebar-add-boards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .side-bar-boards-display {
   padding: 1rem;
