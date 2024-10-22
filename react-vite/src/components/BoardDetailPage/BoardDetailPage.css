@@ -68,6 +68,17 @@
 }
 
 
+#ai-tip-icon {
+  color: white;
+  font-size: 0.9rem;
+}
+
+.board-header button {
+  background-color: transparent;
+  margin-top: 4px;
+  padding: 0;
+}
+
 
 
 

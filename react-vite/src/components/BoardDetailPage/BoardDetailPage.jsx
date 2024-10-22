@@ -11,7 +11,7 @@ import OpenModalButton from '../OpenModalButton';
 import CreateCsModal from "../CreateCsModal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as regularFaStar} from '@fortawesome/free-regular-svg-icons';
-import { faStar as solidFaStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as solidFaStar, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { closestCorners, DndContext, DragOverlay } from '@dnd-kit/core';
 import { addFavThunk, deleteFavThunk, getFavsThunk } from "../../redux/session";
 import Cards from '../Cards/Cards'
@@ -115,7 +115,6 @@ export default function BoardDetailPage() {
   }
 
   const handleDragEnd = ({ active, over }) => {
-    console.log("drag end!!!!!!");
     setActiveCard(null);
 
     if (!over) return;
@@ -126,7 +125,7 @@ export default function BoardDetailPage() {
     console.log(oldSectionId, newSectionId)
 
     const oldIndex = cardArr.findIndex(card => card.id === active.id);
-    const newIndex = cardArr.findIndex(card => card.id === over.id);
+    // const newIndex = cardArr.findIndex(card => card.id === over.id);
 
     if (oldIndex !== -1) {
       const updatedCards = [...cardArr];
@@ -138,7 +137,6 @@ export default function BoardDetailPage() {
         const newI = orderedTargetCards.findIndex(card => card.id === over.id);
         const [movingCard] = orderedTargetCards.splice(oldI, 1);
         orderedTargetCards.splice(newI, 0, movingCard);
-        // console.log(orderedTargetCards);
         for (let i = 0; i < orderedTargetCards.length; i++) {
           orderedTargetCards[i].order = i;
         }
@@ -207,7 +205,7 @@ export default function BoardDetailPage() {
         }
 
         <OpenModalButton
-          buttonText='AI Tips'
+          buttonText={<FontAwesomeIcon icon={faWandMagicSparkles} id="ai-tip-icon"/>}
           modalComponent={<AIModal boardId={currBoard.id} />}
         />
       </div>
