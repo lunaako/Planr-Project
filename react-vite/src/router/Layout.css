@@ -2,19 +2,22 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  position: relative;
 }
 
 .content-container {
   display: flex;
   flex: 1;
   width: 100%;
+  position: relative;
 }
 
 /* Side Bar */
 .side-bar {
-  width: 20%;
+  /* width: 20%; */
   position: relative;
   z-index: 2;
+  transition: width 0.3s ease;
 }
 
 /* Other component in Outlet */
@@ -22,10 +25,40 @@
   flex: 1;
   z-index: 1;
   position: relative;
+  transition: width 0.3s ease;
 }
 
 .center-content {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.toggle-sidebar-btn {
+  position: absolute;
+  top: 5px;
+  left: 15%;
+  z-index: 100;
+  cursor: pointer;
+  transition: left 0.3s ease;
+  border-radius: 100%;
+  height: 20px;
+  width: 20px;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle-sidebar-btn:hover {
+  background-color: rgba(131, 140, 160, 0.3);
+}
+
+.side-bar.hidden {
+  transform: translateX(-100%);
+  display: none;
+}
+
+.toggle-sidebar-btn.outside {
+  left: -4px;
 }
