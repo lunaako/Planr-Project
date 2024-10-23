@@ -45,7 +45,7 @@ def get_board_ai_suggestion():
               Request:
                 {description}
 
-              Please use this information to generate new suggested task categories and task cards. The reply should be less than 200 words and in natural language. Your reply shouldn't directly mention Card Section or Cards
+              Please use this information to generate new suggested task categories and task cards. The reply should be less than 200 words and in natural language.
             '''
     return {"answer": call_gpt(prompt_for_ai)}
 
