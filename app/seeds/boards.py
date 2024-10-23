@@ -14,10 +14,21 @@ board3 = Board(
   name='Bobbie\'s Study Goal', user=bobbie
 )
 
+board4 = Board(
+    name='Capstone Project', user=demo
+)
+
+board5 = Board(
+    name='One week menu', user=demo
+)
+
 def seed_boards():
   db.session.add(board1)
   db.session.add(board2)
   db.session.add(board3)
+  db.session.add(board4)
+  db.session.add(board5)
+
   db.session.commit()
 
 def undo_boards():
