@@ -122,7 +122,6 @@ export default function BoardDetailPage() {
     const oldSectionId = active.data?.current.cardSectionId;
     const newSectionId = over.data?.current.cardSectionId;
 
-    console.log(oldSectionId, newSectionId)
 
     const oldIndex = cardArr.findIndex(card => card.id === active.id);
     // const newIndex = cardArr.findIndex(card => card.id === over.id);

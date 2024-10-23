@@ -77,7 +77,6 @@ export const createCardThunk = (csId, newCard) => async(dispatch) => {
 }
 
 export const updateCardThunk = (cardId, card) => async(dispatch) => {
-  console.log(card)
   const res = await fetch(`/api/cards/${cardId}`, {
     method: 'PUT',
     body: JSON.stringify(card),
@@ -176,7 +175,6 @@ function cardReducer(state={}, action) {
     case ON_DRAG_CARD: {
       const newState = {...state};
       const moveCardProps = action.payload;
-      console.log(moveCardProps);
       newState[moveCardProps.id].cardSectionId = moveCardProps.tempCardSectionId;
       newState[moveCardProps.id].floating = true;
       return newState;
