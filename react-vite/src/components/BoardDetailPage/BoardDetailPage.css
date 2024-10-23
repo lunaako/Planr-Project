@@ -35,11 +35,16 @@
 .board-detail-main-card {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow-x: scroll;
   align-items: flex-start;
   height: 80vh;
   gap: 2%;
   margin-left: 1%;
+  margin-right: 1%;
+}
+
+.board-detail-main-card::-webkit-scrollbar {
+  display: none;
 }
 
 .board-name-input{
