@@ -5,6 +5,7 @@ import DeleteCardModal from '../DeleteCardModal/DeleteCardModal'
 import UpdateCardModal from '../UpdateCardModal/UpdateCardModal'
 import { useSortable } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
+import changeLabelColor from '../../utils/labelHelper';
 
 export default function Cards({card, csId}) {
   const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
@@ -25,18 +26,25 @@ export default function Cards({card, csId}) {
       style={style}
       onClick={(e) => e.stopPropagation()}
     >
-      <p {...attributes} {...listeners}>{card.name}</p>
-      <div className='card-section-card-row-icons'>
-        <OpenModalButton
-          buttonText={<FontAwesomeIcon icon={faTrash} />}
-          modalComponent={<DeleteCardModal cardId={card.id} />}
-        />
-        <OpenModalButton
-          buttonText={<FontAwesomeIcon icon={faPen} />}
-          modalComponent={<UpdateCardModal card={card} csId={csId} />}
-          modalClassName='update-card-modal'
-        />
+      { card?.labels ? 
+      <div className='card-label-outside' id={changeLabelColor(card.labels)}>{card.labels}</div>
+        : ""
+      }
+      <div className='card-content'>
+        <p {...attributes} {...listeners}>{card.name}</p>
+        <div className='card-section-card-row-icons'>
+          <OpenModalButton
+            buttonText={<FontAwesomeIcon icon={faTrash} />}
+            modalComponent={<DeleteCardModal cardId={card.id} />}
+          />
+          <OpenModalButton
+            buttonText={<FontAwesomeIcon icon={faPen} />}
+            modalComponent={<UpdateCardModal card={card} csId={csId} />}
+            modalClassName='update-card-modal'
+          />
+        </div>
       </div>
+      
     </div>
   )
 }

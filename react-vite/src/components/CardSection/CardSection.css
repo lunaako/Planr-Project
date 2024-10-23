@@ -52,8 +52,8 @@
 
 .card-section-card-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 0;
   border: 0.6px solid #ccc;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -62,9 +62,27 @@
   white-space: pre-wrap;
 }
 
+.card-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.card-label-outside {
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem;
+  width: fit-content;
+  border-radius: 10px;
+  height: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+
 .card-section-card-row-dragging {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   border:2px dotted #ccc;
   background-color: #f1f2f4;
