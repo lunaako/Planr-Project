@@ -16,6 +16,7 @@ import { closestCorners, DndContext, DragOverlay } from '@dnd-kit/core';
 import { addFavThunk, deleteFavThunk, getFavsThunk } from "../../redux/session";
 import Cards from '../Cards/Cards'
 import AIModal from "../AIModal/AIModal";
+import deletedGif from '/deleted.gif';
 
 
 export default function BoardDetailPage() {
@@ -93,7 +94,10 @@ export default function BoardDetailPage() {
   }, [dispatch, boardId])
 
   if (!user) return (<LoginFormPage />)
-  if (!currBoard) return <> Oops, this board doesn't exist...</>
+  if (!currBoard) return <div className="deleted-container">
+                          <img src={deletedGif} alt='gif' className="deleted-gif"/> 
+                          <h4>The board has already been deleted, try another one</h4>
+                         </div>
 
   const handleDragStart = (e) => {
     const activeId = e.active.id;
