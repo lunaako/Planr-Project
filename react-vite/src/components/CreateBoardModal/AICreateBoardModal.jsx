@@ -33,8 +33,9 @@ export default function AICreateBoardModal() {
     })
     if (res.ok) {
       const data = await res.json();
-      setSuggestion(data.answer);
       setIsLoading(false);
+      setSuggestion(data.answer);
+      
       return data;
     } else {
       const err = await res.json();
