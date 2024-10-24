@@ -7,6 +7,8 @@ import aiGif from '/aiGif.gif';
 import loadingGif from '/loading.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from "react-redux";
+import { getBoardsThunk } from "../../redux/board";
 
 
 export default function AICreateBoardModal() {
@@ -15,6 +17,7 @@ export default function AICreateBoardModal() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { closeModal } = useModal();
+  const dispatch = useDispatch()
 
 
   const handleSuggestionClick = async () => {
@@ -53,6 +56,7 @@ export default function AICreateBoardModal() {
     if (res.ok) {
       const data = await res.json(); 
       setIsLoading(false);
+      dispatch(getBoardsThunk());
       closeModal();     
       navigate(`/boards/${data.board_id}`);
       return data;
@@ -101,7 +105,7 @@ export default function AICreateBoardModal() {
         : 
         <div></div>}
       
-      {isLoading && <img src={loadingGif} alt='loading' className="loading-gif"/>}
+      <img src={loadingGif} alt='loading' className={isLoading ? "loading-gif" : "loading-gif hide-gif"}/>
       
       <div className="create-board-ai-buttons">
         <button
