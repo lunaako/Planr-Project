@@ -37,7 +37,7 @@
 .toggle-sidebar-btn {
   position: absolute;
   top: 5px;
-  left: 15%;
+  left: 13.5rem;
   z-index: 100;
   cursor: pointer;
   transition: left 0.3s ease;
@@ -60,5 +60,5 @@
 }
 
 .toggle-sidebar-btn.outside {
-  left: -4px;
+  left: 0px;
 }

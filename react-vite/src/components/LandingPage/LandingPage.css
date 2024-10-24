@@ -9,12 +9,12 @@
 .landing-starred {
   height: 46%;
   border-bottom: 1px solid #ccc;
-  padding: 1%;
+  padding: 1rem;
 }
 
 .landing-all-boards {
   height: 46%;
-  padding: 1%;
+  padding: 1rem;
 }
 
 .landing-allboards-icon {
