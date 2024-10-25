@@ -1,11 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField
+from wtforms.validators import DataRequired
 
 class BoardSuggestionForm(FlaskForm):
   description = StringField('description', validators=[
-    DataRequired(message='description is required'),
-    Length(min=20, message='description should be longer than 20 characters')
+    DataRequired(message='description is required')
     ])
   
 class BoardCreationForm(FlaskForm):
