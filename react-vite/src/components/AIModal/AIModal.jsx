@@ -18,8 +18,8 @@ export default function AIModal({boardId}) {
     const res = await fetch(`/api/ai/${boardId}`);
     if (res.ok) {
       const data = await res.json();
-      setTip(data.answer);
       setIsLoading(false);
+      setTip(data.answer);
       return data;
     } else {
       const err = await res.json();
