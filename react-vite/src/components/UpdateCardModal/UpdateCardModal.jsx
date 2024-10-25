@@ -18,7 +18,7 @@ export default function UpdateCardModal({card}) {
   const [description, setDescription] = useState(card?.description || '')
   const [originalDescription, setOriginalDescription] = useState(card?.description || '');
   const [labels, setLabels] = useState(card?.labels || '')
-  const [dueDate, setDueDate] = useState(card?.dueDate ? new Date(card.dueDate) : null)
+  const [dueDate, setDueDate] = useState(card?.dueDate ? new Date(card.dueDate) : new Date(Date.now() + (3600 * 1000 * 48)))
   const [errors, setErrors] = useState({});
   const [nameErr, setNameErr] = useState({});
   const cards = useSelector(state => state.card)
@@ -252,7 +252,7 @@ export default function UpdateCardModal({card}) {
         <div className="update-duedate-display">
           {
             updatedCard.dueDate ? (
-              <p>{new Date(updatedCard.dueDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}</p>
+              <p>{new Date(updatedCard.dueDate).toDateString('en-US', { month: 'short', day: '2-digit' })}</p>
             ) : (
               <p>No due date</p>
             )
